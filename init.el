@@ -88,6 +88,7 @@
 
 ;; Save current buffer as cache and run it with `go run`
 (defun gorun-buffer ()
+  (interactive)
   (let ((b (current-buffer))
     (filepath (concat (getenv "HOME") "/.cache/gorun/" (format-time-string "%d-%m-%Y %H:%M:%S" (current-time)) ".go")))
     (with-temp-buffer
@@ -122,6 +123,7 @@
 (define-key prog-mode-map (kbd "C-c C-u") 'comment-or-uncomment-region)
 (define-key prog-mode-map (kbd "C-c +") 'hs-toggle-hiding)
 (define-key go-mode-map (kbd "C-c C-p") 'gorun-buffer)
+(define-key eglot-mode-map (kbd "C-c C-r") 'eglot-rename)
 
 (custom-set-faces
  '(flymake-error ((t (:foreground "red" :weight bold))))
