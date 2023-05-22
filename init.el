@@ -9,11 +9,15 @@
 (unless (display-graphic-p)
   (xterm-mouse-mode))
 
+;; Indentation behavior and style
 (setq-default indent-tabs-mode nil)
 (setq-default tab-width 4)
 
 ;; Overide `read-only-mode' (C-x C-q) with `view-only-mode'.
 (setq view-read-only t)
+
+;; Save minibuffer histories
+(savehist-mode)
 
 ;; Change saved customization settings file. This prevents clutter
 ;; in init.el.
@@ -39,7 +43,7 @@
       '(use-package
      doom-themes rainbow-mode
      yasnippet rainbow-delimiters smartparens
-     magit auto-package-update
+     magit auto-package-update vertico marginalia
      company eglot
      go-mode))
 
@@ -74,6 +78,21 @@
   (setq eglot-workspace-configuration
     '((:gopls usePlaceholders t))))
 
+(use-package vertico
+  :ensure t
+  :init
+  (vertico-mode)
+  ;; Show more candidates
+  (setq vertico-count 10)
+  ;; Grow and shrink the Vertico minibuffer
+  (setq vertico-resize t))
+
+(use-package marginalia
+  :ensure t
+  :init
+  (marginalia-mode))
+
+(use-package magit :ensure t)
 (use-package company :ensure t)
 (use-package rainbow-mode :ensure t)
 (use-package yasnippet :ensure t)
@@ -86,8 +105,8 @@
 ;;   (interactive)
 ;;   (load user-init-file))
 
-;; Save current buffer as cache and run it with `go run`
 (defun gorun-buffer ()
+  "Save current buffer as cache and run it with `go run`"
   (interactive)
   (let ((b (current-buffer))
     (filepath (concat (getenv "HOME") "/.cache/gorun/" (format-time-string "%d-%m-%Y %H:%M:%S" (current-time)) ".go")))
@@ -105,6 +124,8 @@
 ;; Hook for modes derived from `prog-mode' (eg. `go-mode', `c-mode', etc.).
 (defun prog-mode-derived-hook ()
   (when (derived-mode-p 'prog-mode)
+    (display-line-numbers-mode)
+    (hl-line-mode)
     (show-paren-mode)
     (follow-mode)
     (hs-minor-mode)
@@ -124,9 +145,14 @@
 (define-key prog-mode-map (kbd "C-c +") 'hs-toggle-hiding)
 (define-key go-mode-map (kbd "C-c C-p") 'gorun-buffer)
 (define-key eglot-mode-map (kbd "C-c C-r") 'eglot-rename)
+(define-key vertico-map (kbd "C-]") 'vertico-scroll-up)
+(define-key vertico-map (kbd "C-[") 'vertico-scroll-down)
 
 (custom-set-faces
  '(flymake-error ((t (:foreground "red" :weight bold))))
- '(eglot-diagnostic-tag-unnecessary-face ((t (:underline (:color "red" :style wave)))))
+ '(mode-line ((t (:background "#9CCC65" :foreground "#424242" :box nil))))
+ '(mode-line-buffer-id ((t (:foreground "#212121" :weight bold))))
+ '(mode-line-inactive ((t (:background "#C5E1A5" :foreground "#424242" :box nil))))
  '(show-paren-match ((t (:background "blue" :foreground "white" :weight ultra-bold))))
- '(show-paren-mismatch ((t (:background "red" :foreground "white" :weight ultra-bold)))))
+ '(show-paren-mismatch ((t (:background "red" :foreground "white" :weight ultra-bold))))
+ '(eglot-diagnostic-tag-unnecessary-face ((t (:underline (:color "red" :style wave))))))
