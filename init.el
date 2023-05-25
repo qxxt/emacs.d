@@ -41,42 +41,55 @@
 ;; Selected packages
 (setq package-selected-packages
       '(use-package
-     doom-themes rainbow-mode
-     yasnippet rainbow-delimiters smartparens
-     magit auto-package-update vertico marginalia
-     company eglot
-     go-mode))
+         doom-themes rainbow-mode
+         yasnippet rainbow-delimiters smartparens
+         magit auto-package-update vertico marginalia
+         company eglot
+         go-mode))
 
-;; Check if use-package is exist, install if it isn't.
-(unless (package-installed-p 'use-package)
-  (package-refresh-contents)
-  (package-install 'use-package))
+;; Check if `use-package' is exist and  checks if `package-archive-contents' is empty.
+;; Update `package-archive' and install `use-package' if they aren't true isn't.
+(when (or (not (package-installed-p 'use-package))
+          (not package-archive-contents)))
 
 (eval-when-compile
   (require 'use-package))
+
+
+;; `time-to-number-of-days' depends upon `time-date'
+(require 'time-date)
 
 (use-package auto-package-update
   :ensure t
   :init
   (setq auto-package-update-interval 2
-    auto-package-update-delete-old-versions t
-    auto-package-update-prompt-before-update t
-    auto-package-update-show-preview t)
+        auto-package-update-delete-old-versions t
+        auto-package-update-prompt-before-update t
+        auto-package-update-show-preview t)
   :config
-  (auto-package-update-maybe))
+  ;; Update `package-archives' and upgrade packages when it's last updated
+  ;; `auto-package-update-interval' days ago, with prompts.
+  (when (and (<= auto-package-update-interval
+                 (time-to-number-of-days
+                  (time-since
+                   (file-attribute-modification-time (file-attributes (concat package-user-dir "/archives/gnu/archive-contents"))))))
+             (y-or-n-p "Update packages now? "))
+    (package-refresh-contents)
+    (auto-package-update-now)))
+
 
 (use-package doom-themes
   :ensure t
   :config
   (setq doom-themes-enable-bold t
-    doom-themes-enable-italic t)
+        doom-themes-enable-italic t)
   (load-theme 'doom-solarized-light t))
 
 (use-package eglot
   :ensure t
   :init
   (setq eglot-workspace-configuration
-    '((:gopls usePlaceholders t))))
+        '((:gopls usePlaceholders t))))
 
 (use-package vertico
   :ensure t
@@ -109,15 +122,15 @@
   "Save current buffer as cache and run it with `go run`"
   (interactive)
   (let ((b (current-buffer))
-    (filepath (concat (getenv "HOME") "/.cache/gorun/" (format-time-string "%d-%m-%Y %H:%M:%S" (current-time)) ".go")))
+        (filepath (concat (getenv "HOME") "/.cache/gorun/" (format-time-string "%d-%m-%Y %H:%M:%S" (current-time)) ".go")))
     (with-temp-buffer
       (insert-buffer b)
       (when (re-search-forward (rx "package"
-                   (one-or-more whitespace)
-                   (group (one-or-more any))
-                   word-boundary)
-                   nil t)
-    (replace-match "main" nil nil nil 1))
+                                   (one-or-more whitespace)
+                                   (group (one-or-more any))
+                                   word-boundary)
+                               nil t)
+        (replace-match "main" nil nil nil 1))
       (write-region (point-min) (point-max) filepath))
     (shell-command (concat "go run '" filepath "'"))))
 
