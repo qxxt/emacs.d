@@ -50,11 +50,11 @@
 ;; Check if `use-package' is exist and  checks if `package-archive-contents' is empty.
 ;; Update `package-archive' and install `use-package' if they aren't true isn't.
 (when (or (not (package-installed-p 'use-package))
-          (not package-archive-contents)))
+          (not package-archive-contents))
+  (package-refresh-contents)
+  (package-install 'use-package))
 
-(eval-when-compile
-  (require 'use-package))
-
+(eval-when-compile (require 'use-package))
 
 ;; `time-to-number-of-days' depends upon `time-date'
 (require 'time-date)
@@ -76,7 +76,6 @@
              (y-or-n-p "Update packages now? "))
     (package-refresh-contents)
     (auto-package-update-now)))
-
 
 (use-package doom-themes
   :ensure t
