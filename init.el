@@ -56,13 +56,15 @@
 
 (eval-when-compile (require 'use-package))
 
+(setq use-package-hook-name-suffix nil)
+
 ;; `time-to-number-of-days' depends upon `time-date'
 (require 'time-date)
 
 (use-package auto-package-update
   :ensure t
   :init
-  (setq auto-package-update-interval 2
+  (setq auto-package-update-interval 1
         auto-package-update-delete-old-versions t
         auto-package-update-prompt-before-update t
         auto-package-update-show-preview t)
@@ -87,16 +89,17 @@
 (use-package eglot
   :ensure t
   :init
-  (setq eglot-workspace-configuration
-        '((:gopls usePlaceholders t))))
+  (setq-default eglot-workspace-configuration
+                '((:gopls .
+                          ((formating.gofumpt . t)
+                           (ui.completion.usePlaceholders . t)
+                           (ui.diagnostic.staticcheck . t))))))
 
 (use-package vertico
   :ensure t
   :init
   (vertico-mode)
-  ;; Show more candidates
   (setq vertico-count 10)
-  ;; Grow and shrink the Vertico minibuffer
   (setq vertico-resize t))
 
 (use-package marginalia
@@ -118,12 +121,12 @@
 ;;   (load user-init-file))
 
 (defun gorun-buffer ()
-  "Save current buffer as cache and run it with `go run`"
+  "Save current buffer as cache and run it with `go run`."
   (interactive)
   (let ((b (current-buffer))
         (filepath (concat (getenv "HOME") "/.cache/gorun/" (format-time-string "%d-%m-%Y %H:%M:%S" (current-time)) ".go")))
     (with-temp-buffer
-      (insert-buffer b)
+      (insert-buffer-substring b)
       (when (re-search-forward (rx "package"
                                    (one-or-more whitespace)
                                    (group (one-or-more any))
@@ -133,25 +136,32 @@
       (write-region (point-min) (point-max) filepath))
     (shell-command (concat "go run '" filepath "'"))))
 
-;; Hook for modes derived from `prog-mode' (eg. `go-mode', `c-mode', etc.).
-(defun prog-mode-derived-hook ()
-  (when (derived-mode-p 'prog-mode)
-    (display-line-numbers-mode)
-    (hl-line-mode)
-    (show-paren-mode)
-    (follow-mode)
-    (hs-minor-mode)
-    (rainbow-mode)
-    (yas-minor-mode)
-    (rainbow-delimiters-mode)
-    (smartparens-mode)
-    (add-hook 'before-save-hook 'whitespace-cleanup)))
-(add-hook 'after-change-major-mode-hook #'prog-mode-derived-hook)
+;; Prog mode hook
+(add-hook 'prog-mode-hook
+          #'(lambda()
+              (display-line-numbers-mode)
+              (hl-line-mode)
+              (show-paren-mode)
+              (follow-mode)
+              (hs-minor-mode)
+              (rainbow-mode)
+              (yas-minor-mode)
+              (rainbow-delimiters-mode)
+              (smartparens-mode)
+              (add-hook 'before-save-hook 'whitespace-cleanup)))
 
-(add-hook 'eglot--managed-mode-hook 'company-mode)
+(defun toggle-company-mode(&optional a)
+  "Toggle on/ off company-mode and its derivatives"
+  (interactive)
+  (company-mode (or a 'toggle))
+  (flymake-mode (or a 'toggle)))
+
+(add-hook 'eglot-managed-mode-hook 'company-mode)
+
+(add-hook 'emacs-lisp-mode-hook 'toggle-company-mode)
 
 (add-hook 'go-mode-hook
-          (lambda() (add-hook 'before-save-hook 'gofmt nil 'local)))
+          (lambda() (add-hook 'before-save-hook 'gofumpt nil 'local)))
 
 (define-key prog-mode-map (kbd "C-c C-u") 'comment-or-uncomment-region)
 (define-key prog-mode-map (kbd "C-c +") 'hs-toggle-hiding)
