@@ -99,6 +99,11 @@
                            (ui.completion.usePlaceholders . t)
                            (ui.diagnostic.staticcheck . t))))))
 
+(use-package go-mode
+  :ensure t
+  :init
+  (setq gofmt-command "gofumpt"))
+
 (use-package vertico
   :ensure t
   :init
@@ -117,7 +122,6 @@
 (use-package yasnippet :ensure t)
 (use-package rainbow-delimiters :ensure t)
 (use-package smartparens :ensure t)
-(use-package go-mode :ensure t)
 
 ;; Reevaluate init file
 ;; (defun reevaluate-init-file ()
@@ -155,7 +159,7 @@
               (add-hook 'before-save-hook 'whitespace-cleanup)))
 
 (defun toggle-company-mode(&optional a)
-  "Toggle on/ off company-mode and its derivatives"
+  "Toggle on/ off `company-mode' and its derivatives.  Overide 'toggle with A."
   (interactive)
   (company-mode (or a 'toggle))
   (flymake-mode (or a 'toggle)))
@@ -165,7 +169,7 @@
 (add-hook 'emacs-lisp-mode-hook 'toggle-company-mode)
 
 (add-hook 'go-mode-hook
-          (lambda() (add-hook 'before-save-hook 'gofumpt nil 'local)))
+          (lambda() (add-hook 'before-save-hook 'gofmt nil 'local)))
 
 (define-key prog-mode-map (kbd "C-c C-u") 'comment-or-uncomment-region)
 (define-key prog-mode-map (kbd "C-c +") 'hs-toggle-hiding)
