@@ -56,6 +56,7 @@
 
 (eval-when-compile (require 'use-package))
 
+;; Disable suffix "-hook" for use-package's :hook
 (setq use-package-hook-name-suffix nil)
 
 ;; `time-to-number-of-days' depends upon `time-date'
@@ -69,6 +70,7 @@
         auto-package-update-prompt-before-update t
         auto-package-update-show-preview t)
   :config
+
   ;; Update `package-archives' and upgrade packages when it's last updated
   ;; `auto-package-update-interval' days ago, with prompts.
   (when (and (<= auto-package-update-interval
@@ -90,6 +92,8 @@
   :ensure t
   :init
   (setq-default eglot-workspace-configuration
+                ;; gopls configurations
+                ;; https://github.com/golang/tools/blob/master/gopls/doc/settings.md
                 '((:gopls .
                           ((formating.gofumpt . t)
                            (ui.completion.usePlaceholders . t)
