@@ -1,6 +1,9 @@
 ;; Fix Fullscreen GUI on KDE.
 (setq frame-resize-pixelwise t)
 
+;; Set Firefox as default browser.
+(setq browse-url-browser-function 'browse-url-firefox)
+
 ;; Open GUI Emacs in fullscreen
 (add-to-list 'default-frame-alist '(fullscreen . maximized))
 
@@ -115,6 +118,12 @@
   :ensure t
   :init
   (marginalia-mode))
+
+(use-package ob-go)
+
+(org-babel-do-load-languages
+ 'org-babel-load-languages
+ '((go . t)))
 
 (use-package magit :ensure t)
 (use-package company :ensure t)
