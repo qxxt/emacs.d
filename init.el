@@ -1,9 +1,6 @@
 ;; Fix Fullscreen GUI on KDE.
 (setq frame-resize-pixelwise t)
 
-;; Set Firefox as default browser.
-(setq browse-url-browser-function 'browse-url-firefox)
-
 ;; Open GUI Emacs in fullscreen
 (add-to-list 'default-frame-alist '(fullscreen . maximized))
 
@@ -16,8 +13,17 @@
 (setq-default indent-tabs-mode nil)
 (setq-default tab-width 4)
 
+;; Smooth scrolling
+;; (pixel-scroll-precision-mode 1)
+
+;; Prettify symbols mode
+(global-prettify-symbols-mode t)
+
 ;; Overide `read-only-mode' (C-x C-q) with `view-only-mode'.
 (setq view-read-only t)
+
+;; Highlight current line
+(global-hl-line-mode)
 
 ;; Save minibuffer histories
 (savehist-mode)
@@ -48,25 +54,30 @@
          yasnippet rainbow-delimiters smartparens
          magit auto-package-update vertico marginalia
          company eglot
-         go-mode))
+         go-mode
+         ob-go org-bullets diff-hl))
 
 ;; Check if `use-package' is exist and  checks if `package-archive-contents' is empty.
 ;; Update `package-archive' and install `use-package' if they aren't true isn't.
-(when (or (not (package-installed-p 'use-package))
-          (not package-archive-contents))
+(when (not (package-installed-p 'use-package))
   (package-refresh-contents)
   (package-install 'use-package))
 
 (eval-when-compile (require 'use-package))
+
+;; Ensure all use-package packages
+(setq use-package-always-ensure t)
+
+;; Defer loading packages unless explicitly demanded.
+(setq use-package-always-defer t)
 
 ;; Disable suffix "-hook" for use-package's :hook
 (setq use-package-hook-name-suffix nil)
 
 ;; `time-to-number-of-days' depends upon `time-date'
 (require 'time-date)
-
 (use-package auto-package-update
-  :ensure t
+  :demand t
   :init
   (setq auto-package-update-interval 1
         auto-package-update-delete-old-versions t
@@ -84,15 +95,18 @@
     (package-refresh-contents)
     (auto-package-update-now)))
 
+(use-package diff-hl
+  :demand t
+  :hook ((prog-mode-hook vc-dir-mode-hook) . turn-on-diff-hl-mode))
+
 (use-package doom-themes
-  :ensure t
+  :demand t
   :config
   (setq doom-themes-enable-bold t
         doom-themes-enable-italic t)
   (load-theme 'doom-solarized-light t))
 
 (use-package eglot
-  :ensure t
   :init
   (setq-default eglot-workspace-configuration
                 ;; gopls configurations
@@ -103,34 +117,47 @@
                            (ui.diagnostic.staticcheck . t))))))
 
 (use-package go-mode
-  :ensure t
   :init
   (setq gofmt-command "gofumpt"))
 
 (use-package vertico
-  :ensure t
+  :demand t
   :init
   (vertico-mode)
   (setq vertico-count 10)
   (setq vertico-resize t))
 
 (use-package marginalia
-  :ensure t
+  :demand t
   :init
   (marginalia-mode))
 
-(use-package ob-go)
+(use-package ob-go
+  :config
+  (org-babel-do-load-languages
+   'org-babel-load-languages
+   '((go . t))))
 
-(org-babel-do-load-languages
- 'org-babel-load-languages
- '((go . t)))
+(use-package org-bullets
+  :demand t
+  :hook
+  (org-mode-hook . org-bullets-mode))
 
-(use-package magit :ensure t)
-(use-package company :ensure t)
-(use-package rainbow-mode :ensure t)
-(use-package yasnippet :ensure t)
-(use-package rainbow-delimiters :ensure t)
-(use-package smartparens :ensure t)
+(use-package magit
+  :demand t)
+
+(use-package company
+  :demand t
+  :hook
+  (prog-mode-hook . company-mode))
+(use-package rainbow-mode
+  :demand t)
+(use-package yasnippet
+  :demand t)
+(use-package rainbow-delimiters
+  :demand t)
+(use-package smartparens
+  :demand t)
 
 ;; Reevaluate init file
 ;; (defun reevaluate-init-file ()
@@ -157,7 +184,6 @@
 (add-hook 'prog-mode-hook
           #'(lambda()
               (display-line-numbers-mode)
-              (hl-line-mode)
               (show-paren-mode)
               (follow-mode)
               (hs-minor-mode)
