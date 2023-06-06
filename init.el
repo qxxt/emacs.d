@@ -97,7 +97,8 @@
 
 (use-package diff-hl
   :demand t
-  :hook ((prog-mode-hook vc-dir-mode-hook) . turn-on-diff-hl-mode))
+  :hook
+  ((prog-mode-hook vc-dir-mode-hook) . turn-on-diff-hl-mode))
 
 (use-package doom-themes
   :demand t
@@ -114,55 +115,17 @@
                 '((:gopls .
                           ((formating.gofumpt . t)
                            (ui.completion.usePlaceholders . t)
-                           (ui.diagnostic.staticcheck . t))))))
-
-(use-package go-mode
-  :init
-  (setq gofmt-command "gofumpt"))
-
-(use-package vertico
-  :demand t
-  :init
-  (vertico-mode)
-  (setq vertico-count 10)
-  (setq vertico-resize t))
-
-(use-package marginalia
-  :demand t
-  :init
-  (marginalia-mode))
-
-(use-package ob-go
-  :config
-  (org-babel-do-load-languages
-   'org-babel-load-languages
-   '((go . t))))
-
-(use-package org-bullets
-  :demand t
+                           (ui.diagnostic.staticcheck . t)))))
   :hook
-  (org-mode-hook . org-bullets-mode))
+  (eglot-managed-mode-hook . company-mode)
+  :bind (:map eglot-mode-map
+              ("C-c C-r" . eglot-rename)))
 
-(use-package magit
-  :demand t)
-
-(use-package company
-  :demand t
-  :hook
-  (prog-mode-hook . company-mode))
-(use-package rainbow-mode
-  :demand t)
-(use-package yasnippet
-  :demand t)
-(use-package rainbow-delimiters
-  :demand t)
-(use-package smartparens
-  :demand t)
-
-;; Reevaluate init file
-;; (defun reevaluate-init-file ()
-;;   (interactive)
-;;   (load user-init-file))
+(defun go-format-and-import ()
+  (interactive)
+  (if (bound-and-true-p eglot--managed-mode)
+      (eglot-code-actions nil nil "source.organizeImports" t))
+  (gofmt))
 
 (defun gorun-buffer ()
   "Save current buffer as cache and run it with `go run`."
@@ -180,6 +143,73 @@
       (write-region (point-min) (point-max) filepath))
     (shell-command (concat "go run '" filepath "'"))))
 
+(use-package go-mode
+  :init
+  (setq gofmt-command "gofumpt")
+  :bind (:map go-mode-map
+              ("C-c C-p" . gorun-buffer))
+  :config
+  (add-hook 'before-save-hook 'eglot-format-buffer)
+  (add-hook 'go-mode-hook (lambda()
+                            (add-hook 'before-save-hook 'go-format-and-import))))
+
+(use-package vertico
+  :demand t
+  :init
+  (vertico-mode)
+  (setq vertico-count 10)
+  (setq vertico-resize t)
+  :bind (:map vertico-map
+              ("C-]" . vertico-scroll-up)
+              ("C-[" . vertico-scroll-down)))
+
+(use-package marginalia
+  :demand t
+  :init
+  (marginalia-mode))
+
+(use-package ob-go
+  :config
+  (org-babel-do-load-languages
+   'org-babel-load-languages
+   '((go . t))))
+
+(use-package org-bullets
+  :demand t
+  :hook
+  (org-mode-hook . org-bullets-mode))
+
+(use-package company
+  :demand t
+  :hook
+  (prog-mode-hook . company-mode)
+  (prog-mode-hook . flymake-mode))
+
+(use-package magit
+  :demand t)
+
+(use-package yasnippet
+  :demand t
+  :hook
+  (prog-mode-hook . yas-minor-mode))
+
+(use-package smartparens
+  :hook
+  (prog-mode-hook . smartparens-mode))
+
+(use-package rainbow-delimiters
+  :hook
+  (prog-mode-hook . rainbow-delimiters-mode))
+
+(use-package rainbow-mode
+  :hook
+  (prog-mode-hook . rainbow-mode))
+
+;; Reevaluate init file
+;; (defun reevaluate-init-file ()
+;;   (interactive)
+;;   (load user-init-file))
+
 ;; Prog mode hook
 (add-hook 'prog-mode-hook
           #'(lambda()
@@ -187,31 +217,11 @@
               (show-paren-mode)
               (follow-mode)
               (hs-minor-mode)
-              (rainbow-mode)
-              (yas-minor-mode)
-              (rainbow-delimiters-mode)
-              (smartparens-mode)
-              (add-hook 'before-save-hook 'whitespace-cleanup)))
-
-(defun toggle-company-mode(&optional a)
-  "Toggle on/ off `company-mode' and its derivatives.  Overide 'toggle with A."
-  (interactive)
-  (company-mode (or a 'toggle))
-  (flymake-mode (or a 'toggle)))
-
-(add-hook 'eglot-managed-mode-hook 'company-mode)
-
-(add-hook 'emacs-lisp-mode-hook 'toggle-company-mode)
-
-(add-hook 'go-mode-hook
-          (lambda() (add-hook 'before-save-hook 'gofmt nil 'local)))
+              (add-hook 'before-save-hook 'whitespace-cleanup)
+              (flymake-mode)))
 
 (define-key prog-mode-map (kbd "C-c C-u") 'comment-or-uncomment-region)
 (define-key prog-mode-map (kbd "C-c +") 'hs-toggle-hiding)
-(define-key go-mode-map (kbd "C-c C-p") 'gorun-buffer)
-(define-key eglot-mode-map (kbd "C-c C-r") 'eglot-rename)
-(define-key vertico-map (kbd "C-]") 'vertico-scroll-up)
-(define-key vertico-map (kbd "C-[") 'vertico-scroll-down)
 
 (custom-set-faces
  '(flymake-error ((t (:foreground "red" :weight bold))))
