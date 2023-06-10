@@ -1,3 +1,4 @@
+;;; Code:
 ;; Fix Fullscreen GUI on KDE.
 (setq frame-resize-pixelwise t)
 
@@ -36,6 +37,10 @@
     (load custom-file))
 
 ;; Initialize package sources
+
+;;; Commentary:
+;;
+
 (require 'package)
 
 ;; Add Melpa to package sources list
@@ -55,7 +60,11 @@
          magit auto-package-update vertico marginalia
          company eglot
          go-mode
-         ob-go org-bullets diff-hl))
+         ob-go org-bullets diff-hl
+         nix-mode
+         yasnippet-snippets
+         ;; slime
+         ))
 
 ;; Check if `use-package' is exist and  checks if `package-archive-contents' is empty.
 ;; Update `package-archive' and install `use-package' if they aren't true isn't.
@@ -124,6 +133,8 @@
 
 (defun go-format-and-import ()
   (interactive)
+  (if (not (bound-and-true-p go-mode))
+    (error "Not a go-mode"))
   (gofmt)
   (if (bound-and-true-p eglot--managed-mode)
       (ignore-errors (eglot-code-actions nil nil "source.organizeImports" t))))
@@ -233,3 +244,7 @@
  '(show-paren-match ((t (:background "blue" :foreground "white" :weight ultra-bold))))
  '(show-paren-mismatch ((t (:background "red" :foreground "white" :weight ultra-bold))))
  '(eglot-diagnostic-tag-unnecessary-face ((t (:underline (:color "red" :style wave))))))
+
+(provide 'init)
+
+;;; init.el ends here
