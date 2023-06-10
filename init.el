@@ -17,7 +17,7 @@
 ;; (pixel-scroll-precision-mode 1)
 
 ;; Prettify symbols mode
-(global-prettify-symbols-mode t)
+;; (global-prettify-symbols-mode t)
 
 ;; Overide `read-only-mode' (C-x C-q) with `view-only-mode'.
 (setq view-read-only t)
@@ -108,6 +108,7 @@
   (load-theme 'doom-solarized-light t))
 
 (use-package eglot
+  :demand t
   :init
   (setq-default eglot-workspace-configuration
                 ;; gopls configurations
@@ -123,13 +124,14 @@
 
 (defun go-format-and-import ()
   (interactive)
+  (gofmt)
   (if (bound-and-true-p eglot--managed-mode)
-      (eglot-code-actions nil nil "source.organizeImports" t))
-  (gofmt))
+      (ignore-errors (eglot-code-actions nil nil "source.organizeImports" t))))
 
 (defun gorun-buffer ()
   "Save current buffer as cache and run it with `go run`."
   (interactive)
+  (go-format-and-import)
   (let ((b (current-buffer))
         (filepath (concat (getenv "HOME") "/.cache/gorun/" (format-time-string "%d-%m-%Y %H:%M:%S" (current-time)) ".go")))
     (with-temp-buffer
@@ -144,12 +146,12 @@
     (shell-command (concat "go run '" filepath "'"))))
 
 (use-package go-mode
+  :demand t
   :init
   (setq gofmt-command "gofumpt")
   :bind (:map go-mode-map
               ("C-c C-p" . gorun-buffer))
   :config
-  (add-hook 'before-save-hook 'eglot-format-buffer)
   (add-hook 'go-mode-hook (lambda()
                             (add-hook 'before-save-hook 'go-format-and-import))))
 
