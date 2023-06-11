@@ -68,10 +68,11 @@
   (package-refresh-contents)
   (package-install 'use-package))
 
-(eval-when-compile (require 'use-package))
+(eval-when-compile
+  (require 'use-package))
 
-;; Ensure all use-package packages
-(setq use-package-always-ensure t)
+;; ;; Ensure all use-package packages
+;; (setq use-package-always-ensure t)
 
 ;; Defer loading packages unless explicitly demanded.
 (setq use-package-always-defer t)
@@ -81,15 +82,17 @@
 
 ;; `time-to-number-of-days' depends upon `time-date'
 (require 'time-date)
+
 (use-package auto-package-update
+  :ensure t
   :demand t
   :init
   (setq auto-package-update-interval 1
         auto-package-update-delete-old-versions t
         auto-package-update-prompt-before-update t
         auto-package-update-show-preview t)
-  :config
 
+  :config
   ;; Update `package-archives' and upgrade packages when it's last updated
   ;; `auto-package-update-interval' days ago, with prompts.
   (when (and (<= auto-package-update-interval
@@ -168,6 +171,7 @@
   (vertico-mode)
   (setq vertico-count 10)
   (setq vertico-resize t)
+
   :bind (:map vertico-map
               ("C-]" . vertico-scroll-up)
               ("C-[" . vertico-scroll-down)))
@@ -184,21 +188,15 @@
    '((go . t))))
 
 (use-package org-bullets
-  :demand t
   :hook
   (org-mode-hook . org-bullets-mode))
 
 (use-package company
-  :demand t
   :hook
   (prog-mode-hook . company-mode)
   (prog-mode-hook . flymake-mode))
 
-(use-package magit
-  :demand t)
-
 (use-package yasnippet
-  :demand t
   :hook
   (prog-mode-hook . yas-minor-mode))
 
