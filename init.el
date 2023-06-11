@@ -14,9 +14,6 @@
 (setq-default indent-tabs-mode nil)
 (setq-default tab-width 4)
 
-;; Smooth scrolling
-;; (pixel-scroll-precision-mode 1)
-
 ;; Prettify symbols mode
 ;; (global-prettify-symbols-mode t)
 
@@ -31,7 +28,7 @@
 
 ;; Change saved customization settings file. This prevents clutter
 ;; in init.el.
-(setq custom-file "~/.emacs.d/custom.el")
+(setq custom-file (expand-file-name "custom.el" user-emacs-directory))
 ;; Load customization file, if exist.
 (if (file-exists-p custom-file)
     (load custom-file))
