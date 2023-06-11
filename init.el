@@ -1,4 +1,3 @@
-;;; Code:
 ;; Fix Fullscreen GUI on KDE.
 (setq frame-resize-pixelwise t)
 
@@ -34,10 +33,6 @@
     (load custom-file))
 
 ;; Initialize package sources
-
-;;; Commentary:
-;;
-
 (require 'package)
 
 ;; Add Melpa to package sources list
@@ -53,15 +48,19 @@
 (setq package-selected-packages
       '(use-package
          doom-themes rainbow-mode
-         yasnippet rainbow-delimiters smartparens
+         yasnippet yasnippet-snippets go-snippets py-snippets common-lisp-snippets haskell-snippets
+         rainbow-delimiters smartparens
          magit auto-package-update vertico marginalia
          company eglot
          go-mode
          ob-go org-bullets diff-hl
          nix-mode
-         yasnippet-snippets
-         ;; slime
-         ))
+         slime
+         nixpkgs-fmt
+         python-mode
+         haskell-mode
+         consult
+         shfmt))
 
 ;; Check if `use-package' is exist and  checks if `package-archive-contents' is empty.
 ;; Update `package-archive' and install `use-package' if they aren't true isn't.
@@ -216,9 +215,10 @@
   (prog-mode-hook . rainbow-mode))
 
 ;; Reevaluate init file
-;; (defun reevaluate-init-file ()
-;;   (interactive)
-;;   (load user-init-file))
+(defun reevaluate-init-file ()
+  "Reevaluate init.el file for debugging."
+  (interactive)
+  (load user-init-file))
 
 ;; Prog mode hook
 (add-hook 'prog-mode-hook
