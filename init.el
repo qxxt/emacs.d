@@ -71,7 +71,7 @@
 (eval-when-compile
   (require 'use-package))
 
-;; ;; Ensure all use-package packages
+;; Ensure all use-package packages
 ;; (setq use-package-always-ensure t)
 
 ;; Defer loading packages unless explicitly demanded.
@@ -107,13 +107,6 @@
   :hook
   ((prog-mode-hook vc-dir-mode-hook) . diff-hl-mode))
 
-(use-package shfmt
-  :bind (:map sh-mode-map
-                      ("C-c C-f" . shfmt-buffer))
-
-  :hook
-  (sh-mode-hook . shfmt-on-save-mode))
-
 (use-package doom-themes
   :ensure t
   :demand t
@@ -124,23 +117,90 @@
   :config
   (load-theme 'doom-solarized-light t))
 
+(use-package vertico
+  :demand t
+  :init
+  (vertico-mode)
+  (setq vertico-count 10)
+  (setq vertico-resize t)
+
+  :bind (:map vertico-map
+              ("C-]" . vertico-scroll-up)
+              ("C-[" . vertico-scroll-down)))
+
+(use-package marginalia
+  :demand t
+  :init
+  (marginalia-mode))
+
+;; Org-mode
+(use-package ob-go
+  :config
+  (org-babel-do-load-languages
+   'org-babel-load-languages
+   '((go . t))))
+
+(use-package org-bullets
+  :hook
+  (org-mode-hook . org-bullets-mode))
+
+;; Prog-mode
+(use-package company
+  :hook
+  (eglot-managed-mode-hook . company-mode)
+  (prog-mode-hook . company-mode)
+  (prog-mode-hook . flymake-mode))
+
 (use-package eglot
   :init
   (setq-default eglot-workspace-configuration
-
                 ;; gopls configurations
                 ;; https://github.com/golang/tools/blob/master/gopls/doc/settings.md
                 '((:gopls .
                           ((formating.gofumpt . t)
                            (ui.completion.usePlaceholders . t)
-                           (ui.diagnostic.staticcheck . t)))))
+                           (ui.diagnostic.staticcheck . t)))
+                  (:nil .
+                        ((formatting.command . "nixpkgs-fmt")))))
 
-  :hook
-  (eglot-managed-mode-hook . company-mode)
+  :config
+  (add-to-list 'eglot-server-programs '(nix-mode . ("nil")))
 
   :bind (:map eglot-mode-map
-              ("C-c C-r" . eglot-rename)))
+              ("C-c C-r" . eglot-rename))
 
+  :hook
+  (nix-mode . eglot-ensure))
+
+(use-package yasnippet
+  :hook
+  (prog-mode-hook . yas-minor-mode))
+
+(use-package smartparens
+  :hook
+  (prog-mode-hook . smartparens-mode))
+
+(use-package rainbow-delimiters
+  :hook
+  (prog-mode-hook . rainbow-delimiters-mode))
+
+(use-package rainbow-mode
+  :hook
+  (prog-mode-hook . rainbow-mode))
+
+;; sh-mode
+(use-package shfmt
+  :bind (:map sh-mode-map
+                      ("C-c C-f" . shfmt-buffer))
+
+  :hook
+  (sh-mode-hook . shfmt-on-save-mode))
+
+;; Nixos
+(use-package nix-mode
+  :mode "\\.nix\\'")
+
+;; go-mode
 (defun go-format-and-import ()
   "Format and imports the required modules."
   (interactive)
@@ -186,53 +246,6 @@
   :hook
   (go-mode-hook . (lambda()
                             (add-hook 'before-save-hook 'go-format-and-import))))
-
-(use-package vertico
-  :demand t
-  :init
-  (vertico-mode)
-  (setq vertico-count 10)
-  (setq vertico-resize t)
-
-  :bind (:map vertico-map
-              ("C-]" . vertico-scroll-up)
-              ("C-[" . vertico-scroll-down)))
-
-(use-package marginalia
-  :demand t
-  :init
-  (marginalia-mode))
-
-(use-package ob-go
-  :config
-  (org-babel-do-load-languages
-   'org-babel-load-languages
-   '((go . t))))
-
-(use-package org-bullets
-  :hook
-  (org-mode-hook . org-bullets-mode))
-
-(use-package company
-  :hook
-  (prog-mode-hook . company-mode)
-  (prog-mode-hook . flymake-mode))
-
-(use-package yasnippet
-  :hook
-  (prog-mode-hook . yas-minor-mode))
-
-(use-package smartparens
-  :hook
-  (prog-mode-hook . smartparens-mode))
-
-(use-package rainbow-delimiters
-  :hook
-  (prog-mode-hook . rainbow-delimiters-mode))
-
-(use-package rainbow-mode
-  :hook
-  (prog-mode-hook . rainbow-mode))
 
 ;; Reevaluate init file
 (defun reevaluate-init-file ()
