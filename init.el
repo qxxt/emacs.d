@@ -101,44 +101,59 @@
                    (file-attribute-modification-time (file-attributes (concat package-user-dir "/archives/gnu/archive-contents"))))))
              (y-or-n-p "Update packages now? "))
     (package-refresh-contents)
-    (auto-package-update-now)))
+    (auto-package-update-maybe)))
 
 (use-package diff-hl
-  :demand t
   :hook
-  ((prog-mode-hook vc-dir-mode-hook) . turn-on-diff-hl-mode))
+  ((prog-mode-hook vc-dir-mode-hook) . diff-hl-mode))
+
+(use-package shfmt
+  :bind (:map sh-mode-map
+                      ("C-c C-f" . shfmt-buffer))
+
+  :hook
+  (sh-mode-hook . shfmt-on-save-mode))
 
 (use-package doom-themes
+  :ensure t
   :demand t
-  :config
+  :init
   (setq doom-themes-enable-bold t
         doom-themes-enable-italic t)
+
+  :config
   (load-theme 'doom-solarized-light t))
 
 (use-package eglot
-  :demand t
   :init
   (setq-default eglot-workspace-configuration
+
                 ;; gopls configurations
                 ;; https://github.com/golang/tools/blob/master/gopls/doc/settings.md
                 '((:gopls .
                           ((formating.gofumpt . t)
                            (ui.completion.usePlaceholders . t)
                            (ui.diagnostic.staticcheck . t)))))
+
   :hook
   (eglot-managed-mode-hook . company-mode)
+
   :bind (:map eglot-mode-map
               ("C-c C-r" . eglot-rename)))
 
 (defun go-format-and-import ()
+  "Format and imports the required modules."
   (interactive)
-  (if (not (bound-and-true-p go-mode))
-    (error "Not a go-mode"))
+  (unless (eq major-mode 'go-mode)
+    (message "err 1")
+    (error "Not in go-mode"))
+
   (gofmt)
   (if (bound-and-true-p eglot--managed-mode)
-      (ignore-errors (eglot-code-actions nil nil "source.organizeImports" t))))
+      (ignore-errors (eglot-code-actions nil nil "source.organizeImports" t))
+    (goimports)))
 
-(defun gorun-buffer ()
+(defun go-eval-buffer ()
   "Save current buffer as cache and run it with `go run`."
   (interactive)
   (go-format-and-import)
@@ -155,14 +170,21 @@
       (write-region (point-min) (point-max) filepath))
     (shell-command (concat "go run '" filepath "'"))))
 
+;; TODO
+(defun goimports ()
+  "Imports dependencies using goimport tool."
+  (interactive))
+
 (use-package go-mode
-  :demand t
   :init
   (setq gofmt-command "gofumpt")
+
   :bind (:map go-mode-map
-              ("C-c C-p" . gorun-buffer))
-  :config
-  (add-hook 'go-mode-hook (lambda()
+              ("C-c C-f" . go-format-and-import)
+              ("C-c C-p" . go-eval-buffer))
+
+  :hook
+  (go-mode-hook . (lambda()
                             (add-hook 'before-save-hook 'go-format-and-import))))
 
 (use-package vertico
