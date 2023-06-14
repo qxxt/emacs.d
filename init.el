@@ -271,8 +271,9 @@
               (add-hook 'before-save-hook 'whitespace-cleanup)
               (flymake-mode)))
 
-(define-key prog-mode-map (kbd "C-c C-u") 'comment-or-uncomment-region)
-(define-key prog-mode-map (kbd "C-c +") 'hs-toggle-hiding)
+(define-key prog-mode-map (kbd "C-c C-u") 'comment-or-uncomment-region) ;; toggle comment region
+(define-key prog-mode-map (kbd "C-c +") 'hs-toggle-hiding) ;; Toggle hiding code block
+(define-key global-map (kbd "C-c C-w") 'fill-paragraph) ;; Wrap text
 
 (custom-set-faces
  '(flymake-error ((t (:foreground "red" :weight bold))))
