@@ -1,11 +1,17 @@
+;;; init.el --- Load the full configuration -*- lexical-binding: t -*-
+
+;;; Commentary:
+
+;;; Code:
+
 ;; Fix Fullscreen GUI on KDE.
 (setq frame-resize-pixelwise t)
 
 ;; Open GUI Emacs in fullscreen
 (add-to-list 'default-frame-alist '(fullscreen . maximized))
 
-;; Enable mouse & touchscreen support in non-GUI Emacs.
-;; Enabled by default on Termux.
+;; Enable mouse & touchscreen support in non-GUI Emacs. Enabled by
+;; default on Termux.
 (unless (display-graphic-p)
   (xterm-mouse-mode))
 
@@ -25,8 +31,8 @@
 ;; Save minibuffer histories
 (savehist-mode)
 
-;; Change saved customization settings file. This prevents clutter
-;; in init.el.
+;; Change saved customization settings file. This prevents clutter in
+;; init.el.
 (setq custom-file (expand-file-name "custom.el" user-emacs-directory))
 ;; Load customization file, if exist.
 (if (file-exists-p custom-file)
@@ -38,7 +44,8 @@
 ;; Add Melpa to package sources list
 (add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/"))
 
-;; Initialize package as `package-enable-at-startup' is set to nil in early-init.el
+;; Initialize package as `package-enable-at-startup' is set to nil in
+;; early-init.el
 (package-initialize)
 
 ;; Prefer Melpa over default repository
@@ -62,8 +69,9 @@
          consult
          shfmt))
 
-;; Check if `use-package' is exist and  checks if `package-archive-contents' is empty.
-;; Update `package-archive' and install `use-package' if they aren't true isn't.
+;; Check if `use-package' is exist and checks if
+;; `package-archive-contents' is empty. Update `package-archive' and
+;; install `use-package' if they aren't true isn't.
 (when (not (package-installed-p 'use-package))
   (package-refresh-contents)
   (package-install 'use-package))
@@ -93,8 +101,8 @@
         auto-package-update-show-preview t)
 
   :config
-  ;; Update `package-archives' and upgrade packages when it's last updated
-  ;; `auto-package-update-interval' days ago, with prompts.
+  ;; Update `package-archives' and upgrade packages when it's last
+  ;; updated `auto-package-update-interval' days ago, with prompts.
   (when (and (<= auto-package-update-interval
                  (time-to-number-of-days
                   (time-since
