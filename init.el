@@ -178,7 +178,7 @@
               ("C-c C-r" . eglot-rename))
 
   :hook
-  (nix-mode . eglot-ensure))
+  (nix-mode-hook . eglot-ensure))
 
 (use-package yasnippet
   :hook
@@ -206,7 +206,13 @@
 
 ;; Nixos
 (use-package nix-mode
-  :mode "\\.nix\\'")
+  :mode "\\.nix\\'"
+  :hook
+  (nix-mode-hook . nix-prettify-mode)
+  (nix-mode-hook . nix-format-before-save)
+
+  :bind (:map nix-mode-map
+              ("C-c C-f" . nix-format-buffer)))
 
 ;; go-mode
 (defun go-format-and-import ()
