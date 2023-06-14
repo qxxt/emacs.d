@@ -53,9 +53,10 @@
 
 ;; Selected packages
 (setq package-selected-packages
-      '(use-package
-         doom-themes rainbow-mode
-         yasnippet yasnippet-snippets go-snippets py-snippets common-lisp-snippets haskell-snippets
+      '(doom-themes rainbow-mode
+         use-package
+         yasnippet yasnippet-snippets
+         go-snippets py-snippets common-lisp-snippets haskell-snippets
          rainbow-delimiters smartparens
          magit auto-package-update vertico marginalia
          company eglot
@@ -67,7 +68,8 @@
          python-mode
          haskell-mode
          consult
-         shfmt))
+         shfmt
+         treemacs))
 
 ;; Check if `use-package' is exist and checks if
 ;; `package-archive-contents' is empty. Update `package-archive' and
