@@ -287,7 +287,7 @@
 
   :bind (:map go-mode-map
               ("C-c C-f" . go-format-and-import)
-              ("C-c C-p" . go-eval-buffer))
+              ("C-c C-e" . go-eval-buffer))
 
   :hook
   (go-mode-hook . (lambda()
@@ -312,6 +312,7 @@
 (define-key prog-mode-map (kbd "C-c C-u") 'comment-or-uncomment-region) ;; toggle comment region
 (define-key prog-mode-map (kbd "C-c +") 'hs-toggle-hiding) ;; Toggle hiding code block
 (define-key global-map (kbd "C-c C-w") 'fill-paragraph) ;; Wrap text
+(define-key lisp-interaction-mode-map (kbd "C-c C-e") 'eval-buffer)
 
 (custom-set-faces
  '(flymake-error ((t (:foreground "red" :weight bold))))
