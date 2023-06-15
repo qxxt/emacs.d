@@ -28,8 +28,10 @@ Keybindings cheatsheet
 - comment-or-uncomment-region: C-c C-u
 - Toggle hiding code block: C-c +
 - Eval buffer: C-c C-e
+- Rename symbol (iedit): C-;
 
 ** Text Manipulation
 - Wrap long text: C-c C-w
 - Undo: C-x u
 - Redo: C-S-u
+- View mode: C-x C-q
