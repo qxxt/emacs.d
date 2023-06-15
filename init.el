@@ -134,8 +134,8 @@
   :demand t
   :init
   (vertico-mode)
-  (setq vertico-count 10)
-  (setq vertico-resize t)
+  (setq vertico-count 10
+        vertico-resize t)
 
   :bind (:map vertico-map
               ("C-]" . vertico-scroll-up)
