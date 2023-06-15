@@ -1,0 +1,33 @@
+* Keybinding
+Keybindings cheatsheet
+
+** Navigation
+- search, search-next: C-s
+- search-previous: C-r
+- move paragraph vertically: C-[up], C-[down]
+
+** Treemacs
+- treemacs-select-window: C-c f
+- Show Treemacs window: [f8]
+
+** Windows
+- Switch window: C-x o
+- Switch buffer: C-x [left], C-x [right]
+- Kill buffer: C-x k
+
+** Vertico/ minibuffer
+- Scroll page up: C-[
+- Scroll page down: C-]
+
+** Eglot/ LSP
+- Rename symbol: C-c C-r
+
+** Prog-mode
+- Format buffer, most: C-c C-f
+- Jump to definition: C-c C-j
+- comment-or-uncomment-region: C-c C-u
+- Toggle hiding code block: C-c +
+- Eval buffer: C-c C-e
+
+** Text Manipulation
+- Wrap long text: C-c C-w
