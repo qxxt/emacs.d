@@ -114,6 +114,8 @@
     (auto-package-update-maybe)))
 
 (use-package diff-hl
+  :ensure t
+  :demand t
   :hook
   ((prog-mode-hook vc-dir-mode-hook) . diff-hl-mode))
 
@@ -128,6 +130,7 @@
   (load-theme 'doom-solarized-light t))
 
 (use-package vertico
+  :ensure t
   :demand t
   :init
   (vertico-mode)
@@ -139,6 +142,7 @@
               ("C-[" . vertico-scroll-down)))
 
 (use-package marginalia
+  :ensure t
   :demand t
   :init
   (marginalia-mode))
