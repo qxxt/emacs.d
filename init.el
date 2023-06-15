@@ -72,7 +72,8 @@
          haskell-mode
          consult
          shfmt
-         treemacs))
+         treemacs
+         undo-fu))
 
 ;; Check if `use-package' is exist and checks if
 ;; `package-archive-contents' is empty. Update `package-archive' and
