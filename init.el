@@ -28,6 +28,9 @@
 ;; Highlight current line
 (global-hl-line-mode)
 
+;; Enable global line wrap
+(global-visual-line-mode 1)
+
 ;; Save minibuffer histories
 (savehist-mode)
 
