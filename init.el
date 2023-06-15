@@ -122,6 +122,13 @@
   :hook
   ((prog-mode-hook vc-dir-mode-hook) . diff-hl-mode))
 
+(use-package undo-fu
+  :ensure t
+  :demand t
+  :bind (:map global-map
+              ("C-x u" . undo-fu-only-undo)
+              ("C-S-u" . undo-fu-only-redo)))
+
 (use-package doom-themes
   :ensure t
   :demand t

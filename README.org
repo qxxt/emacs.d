@@ -31,3 +31,5 @@ Keybindings cheatsheet
 
 ** Text Manipulation
 - Wrap long text: C-c C-w
+- Undo: C-x u
+- Redo: C-S-u
