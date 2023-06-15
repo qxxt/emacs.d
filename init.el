@@ -73,7 +73,8 @@
          consult
          shfmt
          treemacs
-         undo-fu))
+         undo-fu
+         dockerfile-mode))
 
 ;; Check if `use-package' is exist and checks if
 ;; `package-archive-contents' is empty. Update `package-archive' and
@@ -236,6 +237,10 @@
 (use-package rainbow-mode
   :hook
   (prog-mode-hook . rainbow-mode))
+
+;; Dockerfile-mode
+(use-package dockerfile-mode
+  :mode "\\Dockerfile\\'")
 
 ;; sh-mode
 (use-package shfmt
