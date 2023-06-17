@@ -119,11 +119,8 @@
     (package-refresh-contents)
     (auto-package-update-maybe)))
 
-(use-package diff-hl
-  :ensure t
-  :demand t
-  :hook
-  ((prog-mode-hook vc-dir-mode-hook) . diff-hl-mode))
+;; Prog-mode
+(load (expand-file-name "git.el" user-emacs-directory))
 
 (use-package undo-fu
   :ensure t
