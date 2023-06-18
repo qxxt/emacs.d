@@ -1,38 +1,13 @@
-;;; init.el --- Load the full configuration -*- lexical-binding: t -*-
-
+;;; init.el --- Load the full configuration
+;; -*- lexical-binding: t; -*-
 ;;; Commentary:
-
 ;;; Code:
 
-;; Fix Fullscreen GUI on KDE.
-(setq frame-resize-pixelwise t)
+;; Produce backtraces when errors occur: can be helpful to diagnose startup issues
+(setq debug-on-error t)
 
-;; Open GUI Emacs in fullscreen
-(add-to-list 'default-frame-alist '(fullscreen . maximized))
-
-;; Enable mouse & touchscreen support in non-GUI Emacs. Enabled by
-;; default on Termux.
-(unless (display-graphic-p)
-  (xterm-mouse-mode))
-
-;; Indentation behavior and style
-(setq-default indent-tabs-mode nil)
-(setq-default tab-width 4)
-
-;; Prettify symbols mode
-;; (global-prettify-symbols-mode t)
-
-;; Overide `read-only-mode' (C-x C-q) with `view-only-mode'.
-(setq view-read-only t)
-
-;; Highlight current line
-(global-hl-line-mode)
-
-;; Enable global line wrap
-(global-visual-line-mode 1)
-
-;; Save minibuffer histories
-(savehist-mode)
+;; Load ~/.emacs.d/lisp directory
+(add-to-list 'load-path (expand-file-name "lisp" user-emacs-directory))
 
 ;; Change saved customization settings file. This prevents clutter in
 ;; init.el.
@@ -51,32 +26,6 @@
 ;; early-init.el
 (package-initialize)
 
-;; Prefer Melpa over default repository
-(setq package-archive-priorities '(("melpa" . 1)))
-
-;; Selected packages
-(setq package-selected-packages
-      '(doom-themes rainbow-mode
-         use-package
-         yasnippet yasnippet-snippets
-         go-snippets py-snippets common-lisp-snippets haskell-snippets
-         rainbow-delimiters smartparens
-         magit auto-package-update vertico marginalia
-         company eglot
-         go-mode
-         ob-go org-bullets diff-hl
-         nix-mode
-         slime
-         nixpkgs-fmt
-         python-mode
-         haskell-mode
-         consult
-         shfmt
-         treemacs
-         undo-fu
-         dockerfile-mode
-         iedit))
-
 ;; Check if `use-package' is exist and checks if
 ;; `package-archive-contents' is empty. Update `package-archive' and
 ;; install `use-package' if they aren't true isn't.
@@ -85,182 +34,29 @@
   (package-install 'use-package))
 
 (eval-when-compile
-  (require 'use-package))
+  (require 'use-package)
+  (setq use-package-verbose t))
 
-;; Ensure all use-package packages
-;; (setq use-package-always-ensure t)
+(setq use-package-always-ensure t ; Ensure all use-package packages
+      use-package-always-defer t ; Defer loading packages unless explicitly demanded.
+      use-package-hook-name-suffix nil ; Disable suffix "-hook" for use-package's :hook
+      )
 
-;; Defer loading packages unless explicitly demanded.
-(setq use-package-always-defer t)
+(require 'init-interface)
+(require 'init-theme)
+(require 'init-editing-utils)
+(require 'init-minibuffer)
+(require 'init-packages)
+(require 'init-git)
 
-;; Disable suffix "-hook" for use-package's :hook
-(setq use-package-hook-name-suffix nil)
+(require 'init-treemacs)
 
-;; `time-to-number-of-days' depends upon `time-date'
-(require 'time-date)
+(require 'init-prog)
+(require 'init-go)
+(require 'init-lisp)
+(require 'init-org)
 
-(use-package auto-package-update
-  :ensure t
-  :demand t
-  :init
-  (setq auto-package-update-interval 1
-        auto-package-update-delete-old-versions t
-        auto-package-update-prompt-before-update t
-        auto-package-update-show-preview t)
-
-  :config
-  ;; Update `package-archives' and upgrade packages when it's last
-  ;; updated `auto-package-update-interval' days ago, with prompts.
-  (when (and (<= auto-package-update-interval
-                 (time-to-number-of-days
-                  (time-since
-                   (file-attribute-modification-time (file-attributes (concat package-user-dir "/archives/gnu/archive-contents"))))))
-             (y-or-n-p "Update packages now? "))
-    (package-refresh-contents)
-    (auto-package-update-maybe)))
-
-;; Prog-mode
-(load (expand-file-name "git.el" user-emacs-directory))
-
-(use-package slime
-  :init
-  (setq inferior-lisp-program "sbcl"))
-
-(use-package undo-fu
-  :ensure t
-  :demand t
-  :bind (:map global-map
-              ("C-x u" . undo-fu-only-undo)
-              ("C-S-u" . undo-fu-only-redo)))
-
-(use-package doom-themes
-  :ensure t
-  :demand t
-  :init
-  (setq doom-themes-enable-bold t
-        doom-themes-enable-italic t)
-
-  :config
-  (load-theme 'doom-solarized-light t))
-
-(use-package treemacs
-  :ensure t
-  :demand t
-  :init
-  (setq treemacs-follow-after-init t
-        treemacs-indentation 1
-        treemacs-silent-refresh t
-        treemacs-silent-filewatch t
-        treemacs-is-never-other-window t
-        treemacs-sorting 'alphabetic-case-insensitive-asc)
-
-  :config
-  (treemacs-follow-mode t)
-  (treemacs-filewatch-mode t)
-
-  :bind (:map global-map
-        ([f8] . treemacs)
-        ("C-c f" . treemacs-select-window))
-
-  :hook
-  ((prog-mode-hook vc-dir-mode-hook) . treemacs-display-current-project-exclusively))
-
-(use-package vertico
-  :ensure t
-  :demand t
-  :init
-  (vertico-mode)
-  (setq vertico-count 10
-        vertico-resize t)
-
-  :bind (:map vertico-map
-              ("C-]" . vertico-scroll-up)
-              ("C-[" . vertico-scroll-down)))
-
-(use-package marginalia
-  :ensure t
-  :demand t
-  :init
-  (marginalia-mode))
-
-;; Org-mode
-(use-package ob-go
-  :config
-  (org-babel-do-load-languages
-   'org-babel-load-languages
-   '((go . t))))
-
-(use-package org-bullets
-  :hook
-  (org-mode-hook . org-bullets-mode))
-
-;; Prog-mode
-(load (expand-file-name "go.el" user-emacs-directory))
-
-(use-package company
-  :hook
-  (eglot-managed-mode-hook . company-mode)
-  (prog-mode-hook . company-mode)
-  (prog-mode-hook . flymake-mode))
-
-(use-package eglot
-  :init
-  (setq-default eglot-workspace-configuration
-                ;; gopls configurations
-                ;; https://github.com/golang/tools/blob/master/gopls/doc/settings.md
-                '((:gopls .
-                          ((formating.gofumpt . t)
-                           (ui.completion.usePlaceholders . t)
-                           (ui.diagnostic.staticcheck . t)))
-                  (:nil .
-                        ((formatting.command . "nixpkgs-fmt")))))
-
-  :config
-  (add-to-list 'eglot-server-programs '(nix-mode . ("nil")))
-
-  :bind (:map eglot-mode-map
-              ("C-c C-r" . eglot-rename))
-
-  :hook
-  (nix-mode-hook . eglot-ensure))
-
-(use-package yasnippet
-  :hook
-  (prog-mode-hook . yas-minor-mode))
-
-(use-package smartparens
-  :hook
-  (prog-mode-hook . smartparens-mode))
-
-(use-package rainbow-delimiters
-  :hook
-  (prog-mode-hook . rainbow-delimiters-mode))
-
-(use-package rainbow-mode
-  :hook
-  (prog-mode-hook . rainbow-mode))
-
-;; Dockerfile-mode
-(use-package dockerfile-mode
-  :mode "\\Dockerfile\\'")
-
-;; sh-mode
-(use-package shfmt
-  :bind (:map sh-mode-map
-                      ("C-c C-f" . shfmt-buffer))
-
-  :hook
-  (sh-mode-hook . shfmt-on-save-mode))
-
-;; Nixos
-(use-package nix-mode
-  :mode "\\.nix\\'"
-  :hook
-  (nix-mode-hook . nix-prettify-mode)
-  (nix-mode-hook . nix-format-before-save)
-
-  :bind (:map nix-mode-map
-              ("C-c C-f" . nix-format-buffer)))
+(require 'init-face)
 
 ;; Reevaluate init file
 (defun reevaluate-init-file ()
@@ -268,30 +64,5 @@
   (interactive)
   (load user-init-file))
 
-;; Prog mode hook
-(add-hook 'prog-mode-hook
-          #'(lambda()
-              (display-line-numbers-mode)
-              (show-paren-mode)
-              (follow-mode)
-              (hs-minor-mode)
-              (add-hook 'before-save-hook 'whitespace-cleanup)
-              (flymake-mode)))
-
-(define-key prog-mode-map (kbd "C-c C-u") 'comment-or-uncomment-region) ;; toggle comment region
-(define-key prog-mode-map (kbd "C-c +") 'hs-toggle-hiding) ;; Toggle hiding code block
-(define-key global-map (kbd "C-c C-w") 'fill-paragraph) ;; Wrap text
-(define-key lisp-interaction-mode-map (kbd "C-c C-e") 'eval-buffer)
-
-(custom-set-faces
- '(flymake-error ((t (:foreground "red" :weight bold))))
- '(mode-line ((t (:background "#9CCC65" :foreground "#424242" :box nil))))
- '(mode-line-buffer-id ((t (:foreground "#212121" :weight bold))))
- '(mode-line-inactive ((t (:background "#C5E1A5" :foreground "#424242" :box nil))))
- '(show-paren-match ((t (:background "blue" :foreground "white" :weight ultra-bold))))
- '(show-paren-mismatch ((t (:background "red" :foreground "white" :weight ultra-bold))))
- '(eglot-diagnostic-tag-unnecessary-face ((t (:underline (:color "red" :style wave))))))
-
 (provide 'init)
-
 ;;; init.el ends here

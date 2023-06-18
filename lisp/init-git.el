@@ -1,3 +1,8 @@
+;;; init-git.el --- Magit and Git
+;; -*- lexical-binding: t -*-
+;;; Commentary:
+;;; Code:
+
 (use-package magit
   :ensure t
   :demand t)
@@ -11,3 +16,6 @@
   :ensure t
   :demand t
   :hook (vc-dir-mode-hook . magit-delta-mode))
+
+(provide 'init-git)
+;;; init-git.el ends here
