@@ -12,11 +12,11 @@
   :init
   (vertico-mode)
   (setq vertico-count 10
-    vertico-resize t)
+        vertico-resize t)
 
   :bind (:map vertico-map
-          ("C-]" . vertico-scroll-up)
-          ("C-[" . vertico-scroll-down)))
+          ("C-n" . vertico-scroll-up)
+          ("C-p" . vertico-scroll-down)))
 
 (use-package marginalia
   :ensure t

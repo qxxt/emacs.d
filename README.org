@@ -16,8 +16,8 @@ Keybindings cheatsheet
 - Kill buffer: C-x k
 
 ** Vertico/ minibuffer
-- Scroll page up: C-[
-- Scroll page down: C-]
+- Scroll page up: C-p
+- Scroll page down: C-n
 
 ** Eglot/ LSP
 - Rename symbol: C-c C-r
