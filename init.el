@@ -122,6 +122,10 @@
 ;; Prog-mode
 (load (expand-file-name "git.el" user-emacs-directory))
 
+(use-package slime
+  :init
+  (setq inferior-lisp-program "sbcl"))
+
 (use-package undo-fu
   :ensure t
   :demand t
