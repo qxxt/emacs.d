@@ -42,19 +42,22 @@
       use-package-hook-name-suffix nil ; Disable suffix "-hook" for use-package's :hook
       )
 
+(require 'init-packages)
+
 (require 'init-interface)
 (require 'init-theme)
+(require 'init-buffer)
+
 (require 'init-editing-utils)
 (require 'init-minibuffer)
-(require 'init-packages)
 (require 'init-git)
 
-(require 'init-treemacs)
+(require 'init-treemacs) ; TODO. Finished enough, but can be improved
 
 (require 'init-prog)
 (require 'init-go)
-(require 'init-lisp)
-(require 'init-org)
+(require 'init-lisp) ; TODO
+(require 'init-org) ; TODO
 
 (require 'init-face)
 
