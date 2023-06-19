@@ -22,7 +22,7 @@
    vertico marginalia
 
    ;; Git
-   magit magit-delta diff-hl
+   magit diff-hl
 
    ;; Treemacs
    treemacs treemacs-magit

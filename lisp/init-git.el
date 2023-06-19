@@ -10,12 +10,14 @@
 (use-package diff-hl
   :ensure t
   :demand t
-  :hook ((prog-mode-hook vc-dir-mode-hook) . diff-hl-mode))
+  :init
+  (global-diff-hl-mode))
 
-(use-package magit-delta
-  :ensure t
-  :demand t
-  :hook (vc-dir-mode-hook . magit-delta-mode))
+;; (use-package magit-delta
+;;   :ensure t
+;;   :demand t
+;;   :init
+;;   (magit-delta-mode 1))
 
 (provide 'init-git)
 ;;; init-git.el ends here
