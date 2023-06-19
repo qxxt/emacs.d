@@ -3,11 +3,24 @@
 ;;; Commentary:
 ;;; Code:
 
-(use-package company
+(use-package corfu
+  :custom
+  (corfu-auto t)                 ;; Enable auto completion
+  (corfu-separator ?\s)          ;; Orderless field separator
+  (corfu-quit-at-boundary nil)   ;; Never quit at completion boundary
+  (corfu-preview-current t)      ;; Disable current candidate preview
+  (corfu-on-exact-match nil)     ;; Configure handling of exact matches
+  (corfu-scroll-margin 5)        ;; Use scroll margin
+  (corfu-popupinfo-delay 0.5)
+
   :hook
-  (eglot-managed-mode-hook . company-mode)
-  (prog-mode-hook . company-mode)
-  (prog-mode-hook . flymake-mode))
+  ((prog-mode-hook . corfu-mode)
+   (org-mode-hook . corfu-mode)
+   (corfu-mode-hook . corfu-popupinfo-mode)))
+
+(setq completion-cycle-threshold 3 ; TAB cycle if there are only few candidates
+      tab-always-indent 'complete ; Enable indentation+completion using the TAB key.
+      )
 
 (use-package eglot
   :init
@@ -28,9 +41,9 @@
           ("C-c C-r" . eglot-rename))
 
   :hook
-  (nix-mode-hook . eglot-ensure))
+  (nix-mode-hook . eglot-ensure)
+  (eglot-managed-mode-hook . flymake-mode))
 
-;; sh-mode
 (use-package shfmt
   :bind (:map sh-mode-map
               ("C-c C-f" . shfmt-buffer))
@@ -48,19 +61,16 @@
   :bind (:map nix-mode-map
           ("C-c C-f" . nix-format-buffer)))
 
-;; Dockerfile-mode
 (use-package dockerfile-mode
   :mode "\\Dockerfile\\'")
 
 ;; Prog mode hook
 (add-hook 'prog-mode-hook
       #'(lambda()
-          (display-line-numbers-mode)
           (show-paren-mode)
           (follow-mode)
           (hs-minor-mode)
-          (add-hook 'before-save-hook 'whitespace-cleanup)
-          (flymake-mode)))
+          (add-hook 'before-save-hook 'whitespace-cleanup)))
 
 (define-key prog-mode-map (kbd "C-c C-u") 'comment-or-uncomment-region) ;; toggle comment region
 (define-key prog-mode-map (kbd "C-c +") 'hs-toggle-hiding) ;; Toggle hiding code block

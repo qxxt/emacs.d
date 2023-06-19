@@ -28,7 +28,7 @@
    treemacs treemacs-magit
 
    ;; Prog-mode
-   company eglot shfmt python-mode haskell-mode dockerfile-mode
+   corfu eglot shfmt python-mode haskell-mode dockerfile-mode
    nix-mode nixpkgs-fmt
 
    ;; Go-mode
@@ -38,7 +38,7 @@
    slime
 
    ;; Org-mode
-   ob-go org-bullets))
+   org-bullets ob-go))
 
 ;; `time-to-number-of-days' depends upon `time-date'
 (require 'time-date)
@@ -54,13 +54,12 @@
   :config
   ;; Update `package-archives' and upgrade packages when it's last
   ;; updated `auto-package-update-interval' days ago, with prompts.
-  (when (and (<= auto-package-update-interval
+  (if (and (<= auto-package-update-interval
          (time-to-number-of-days
           (time-since
            (file-attribute-modification-time (file-attributes (concat package-user-dir "/archives/gnu/archive-contents"))))))
          (y-or-n-p "Update packages now? "))
-    (package-refresh-contents)
-    (auto-package-update-maybe)))
+      (auto-package-update-maybe)))
 
 (provide 'init-packages)
 ;;; init-packages.el ends here
