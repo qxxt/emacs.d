@@ -6,25 +6,28 @@
 (use-package treemacs
   :ensure t
   :demand t
-  :init
-  (setq treemacs-follow-after-init t
-    treemacs-indentation 1
-    treemacs-silent-refresh t
-    treemacs-silent-filewatch t
-    treemacs-is-never-other-window t
-    treemacs-sorting 'alphabetic-case-insensitive-asc)
-
   :config
+  (setq treemacs-follow-after-init t
+        treemacs-silent-refresh t
+        treemacs-silent-filewatch t
+        treemacs-sorting 'mod-time-desc)
+
   (treemacs-follow-mode t)
   (treemacs-filewatch-mode t)
 
+  (treemacs-hide-gitignored-files-mode nil)
+
   :bind (:map global-map
-    ([f8] . treemacs)
-    ("C-c f" . treemacs-select-window))
+              ("C-c f" . treemacs-select-window)
+              ([f8] . treemacs))
 
-  :hook
-  ((prog-mode-hook vc-dir-mode-hook) . treemacs-display-current-project-exclusively))
+  ;; :hook
+  ;; ((vc-dir-mode-hook prog-mode-hook) . treemacs-display-current-project-exclusively)
+  )
 
+(use-package treemacs-magit
+  :after (treemacs magit)
+  :ensure t)
 
 (provide 'init-treemacs)
 ;;; init-treemacs.el ends here
