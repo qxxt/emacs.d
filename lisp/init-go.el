@@ -47,7 +47,7 @@
 
   :hook
   (go-mode-hook . (lambda()
-                (add-hook 'before-save-hook 'go-format-and-import))))
+                (add-hook 'before-save-hook 'go-format-and-import nil 'local))))
 
 (provide 'init-go)
 ;;; init-go.el ends here
