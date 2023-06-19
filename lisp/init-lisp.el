@@ -7,7 +7,8 @@
   :init
   (setq inferior-lisp-program "sbcl"))
 
-(define-key lisp-interaction-mode-map (kbd "C-c C-e") 'eval-buffer)
+(add-hook 'emacs-lisp-mode-hook #'flymake-mode)
+(define-key emacs-lisp-mode-map (kbd "C-c C-e") 'eval-buffer)
 
 (provide 'init-lisp)
 ;;; init-lisp.el ends here

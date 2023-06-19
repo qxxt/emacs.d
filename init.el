@@ -26,18 +26,17 @@
 ;; early-init.el
 (package-initialize)
 
-;; Check if `use-package' is exist and checks if
-;; `package-archive-contents' is empty. Update `package-archive' and
-;; install `use-package' if they aren't true isn't.
-(when (not (package-installed-p 'use-package))
-  (package-refresh-contents)
+(unless package-archive-contents
+  (package-refresh-contents))
+
+(unless (package-installed-p 'use-package)
   (package-install 'use-package))
 
 (eval-when-compile
   (require 'use-package)
   (setq use-package-verbose t))
 
-(setq use-package-always-ensure t ; Ensure all use-package packages
+(setq use-package-always-ensure nil ; Ensure all use-package packages
       use-package-always-defer t ; Defer loading packages unless explicitly demanded.
       use-package-hook-name-suffix nil ; Disable suffix "-hook" for use-package's :hook
       )
