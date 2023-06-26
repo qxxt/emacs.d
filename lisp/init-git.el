@@ -11,7 +11,8 @@
   :ensure t
   :demand t
   :init
-  (global-diff-hl-mode))
+  (global-diff-hl-mode)
+  (diff-hl-margin-mode))
 
 ;; (use-package magit-delta
 ;;   :ensure t
