@@ -8,15 +8,15 @@
  package-selected-packages
  '(
    ;; Themes
-   modus-themes
+   modus-themes dimmer
 
    ;; Package
    use-package auto-package-update
 
    ;; Texts utils
-   rainbow-mode rainbow-delimiters undo-fu iedit
-   yasnippet yasnippet-snippets go-snippets
-   py-snippets common-lisp-snippets haskell-snippets
+   rainbow-mode rainbow-delimiters undo-fu iedit yasnippet
+   ;; yasnippet-snippets go-snippets py-snippets common-lisp-snippets
+   ;; haskell-snippets
 
    ;; Minibuffer
    vertico marginalia
@@ -28,8 +28,8 @@
    treemacs treemacs-magit
 
    ;; Prog-mode
-   corfu eglot shfmt python-mode haskell-mode dockerfile-mode
-   nix-mode nixpkgs-fmt
+   corfu eglot shfmt python-mode haskell-mode dockerfile-mode nix-mode
+   nixpkgs-fmt
 
    ;; Go-mode
    go-mode
@@ -47,18 +47,18 @@
   :demand t
   :init
   (setq auto-package-update-interval 1
-    auto-package-update-delete-old-versions t
-    auto-package-update-prompt-before-update t
-    auto-package-update-show-preview t)
+        auto-package-update-delete-old-versions t
+        auto-package-update-prompt-before-update t
+        auto-package-update-show-preview t)
 
   :config
   ;; Update `package-archives' and upgrade packages when it's last
   ;; updated `auto-package-update-interval' days ago, with prompts.
   (if (and (<= auto-package-update-interval
-         (time-to-number-of-days
-          (time-since
-           (file-attribute-modification-time (file-attributes (concat package-user-dir "/archives/gnu/archive-contents"))))))
-         (y-or-n-p "Update packages now? "))
+               (time-to-number-of-days
+                (time-since
+                 (file-attribute-modification-time (file-attributes (concat package-user-dir "/archives/gnu/archive-contents"))))))
+           (y-or-n-p "Update packages now? "))
       (auto-package-update-maybe)))
 
 (provide 'init-packages)
