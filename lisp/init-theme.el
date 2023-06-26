@@ -31,7 +31,7 @@
         dimmer-use-colorspace :rgb)
 
   :config
-  (dimmer-mode 1))
+  (dimmer-mode))
 
 (provide 'init-theme)
 ;;; init-theme.el ends here
