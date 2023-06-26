@@ -8,7 +8,7 @@
  package-selected-packages
  '(
    ;; Themes
-   doom-themes
+   modus-themes
 
    ;; Package
    use-package auto-package-update
