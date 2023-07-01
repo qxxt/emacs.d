@@ -46,6 +46,7 @@
 (require 'init-interface)
 (require 'init-theme)
 (require 'init-buffer)
+(require 'init-modeline)
 
 (require 'init-editing-utils)
 (require 'init-minibuffer)
