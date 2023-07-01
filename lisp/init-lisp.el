@@ -3,6 +3,17 @@
 ;;; Commentary:
 ;;; Code:
 
+(define-advice elisp-get-fnsym-args-string (:around (func sym &rest r) docstring)
+  "If SYM is a function, append its docstring."
+  (concat
+   (apply func sym r)
+   (let* ((doc (and (fboundp sym) (documentation sym 'raw)))
+          (oneline (and doc (substring doc 0 (string-match "\n" doc)))))
+     (and oneline
+          (stringp oneline)
+          (not (string= "" oneline))
+          (concat "\n" oneline)))))
+
 (use-package slime
   :init
   (setq inferior-lisp-program "sbcl"))
