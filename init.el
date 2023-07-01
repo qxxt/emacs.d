@@ -49,6 +49,7 @@
 (require 'init-modeline)
 
 (require 'init-editing-utils)
+(require 'init-snippet)
 (require 'init-minibuffer)
 (require 'init-git)
 
