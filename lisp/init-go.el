@@ -3,6 +3,8 @@
 ;;; Commentary:
 ;;; Code:
 
+(put 'gofmt-command 'safe-local-variable #'stringp)
+
 (defun go-format-and-import ()
   "Format and imports the required modules."
   (interactive)
