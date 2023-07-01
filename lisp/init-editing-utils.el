@@ -48,6 +48,7 @@
   (prog-mode-hook . rainbow-delimiters-mode))
 
 (use-package rainbow-mode
+  :delight
   :hook
   (prog-mode-hook . rainbow-mode))
 

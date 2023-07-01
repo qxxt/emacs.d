@@ -4,11 +4,10 @@
 ;;; Code:
 
 ;; Selected packages
-(setq
- package-selected-packages
- '(
-   ;; Themes
-   modus-themes dimmer
+(setq package-selected-packages
+      '(
+        ;; Interface
+        modus-themes dimmer delight
 
    ;; Package
    use-package auto-package-update
