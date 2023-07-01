@@ -53,7 +53,8 @@
 
   :bind (:map go-mode-map
           ("C-c C-f" . go-format-and-import)
-          ("C-c C-e" . go-eval-buffer))
+          ("C-c C-e" . go-eval-buffer)
+          ("M-." . godef-jump))
 
   :hook
   (go-mode-hook . (lambda()

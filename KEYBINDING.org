@@ -24,7 +24,7 @@
 
 ** Prog-mode
    - Format buffer, most: C-c C-f
-   - Jump to definition: C-c C-j
+   - Jump to definition: M-.
    - comment-or-uncomment-region: M-;
    - Toggle hiding code block: C-c +
    - Eval buffer: C-c C-e

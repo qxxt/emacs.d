@@ -36,6 +36,7 @@
 
   :config
   (add-to-list 'eglot-server-programs '(nix-mode . ("nil")))
+  (define-key go-mode-map (kbd "M-.") nil)
 
   :bind (:map eglot-mode-map
           ("C-c C-r" . eglot-rename))
