@@ -1,37 +1,42 @@
 * Keybinding
-Keybindings cheatsheet
+  Keybindings cheatsheet
 
 ** Navigation
-- search, search-next: C-s
-- search-previous: C-r
-- move paragraph vertically: C-[up], C-[down]
+  - search, search-next: C-s
+  - search-previous: C-r
+  - move paragraph vertically: C-[up], C-[down]
 
 ** Treemacs
-- treemacs-select-window: C-c f
-- Show Treemacs window: [f8]
+   - treemacs-select-window: C-c f
+   - Show Treemacs window: [f8]
 
 ** Windows
-- Switch window: C-x o
-- Switch buffer: C-x [left], C-x [right]
-- Kill buffer: C-x k
+  - Switch window: C-x o
+  - Switch buffer: C-x [left], C-x [right]
+  - Kill buffer: C-x k
 
 ** Vertico/ minibuffer
-- Scroll page up: C-p
-- Scroll page down: C-n
+   - Scroll page up: C-p
+   - Scroll page down: C-n
 
 ** Eglot/ LSP
-- Rename symbol: C-c C-r
+   - Rename symbol: C-c C-r
 
 ** Prog-mode
-- Format buffer, most: C-c C-f
-- Jump to definition: C-c C-j
-- comment-or-uncomment-region: C-c C-u
-- Toggle hiding code block: C-c +
-- Eval buffer: C-c C-e
-- Rename symbol (iedit): C-;
+   - Format buffer, most: C-c C-f
+   - Jump to definition: C-c C-j
+   - comment-or-uncomment-region: C-c C-u
+   - Toggle hiding code block: C-c +
+   - Eval buffer: C-c C-e
+   - Rename symbol (iedit): C-;
 
 ** Text Manipulation
-- Wrap long text: C-c C-w
-- Undo: C-x u
-- Redo: C-S-u
-- View mode: C-x C-q
+   - Wrap long text: C-c C-w
+   - Undo: C-x u
+   - Redo: C-S-u
+   - View mode: C-x C-q
+
+** Buffer Management
+   - Mark buffer to be deleted, UP: C-d
+   - Mark buffer to be deleted, DOWN: C-d
+   - Delete marked buffers: x
