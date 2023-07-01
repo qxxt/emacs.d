@@ -7,7 +7,8 @@
   (rx bos (or (or "*Backtrace*" "*Compile-Log*" "*Completions*"
                   "*Messages*" "*package*" "*Warnings*"
                   "*Async-native-compile-log*" "*scratch*"
-                  "*Flymake log*" "*GNU Emacs*")
+                  "*Flymake log*" "*GNU Emacs*" "*Help*")
+              (seq "*EGLOT" (zero-or-more anything))
               (seq "magit" (zero-or-more anything)))
       eos)
   "Regular expression matching buffers ignored by `next-buffer' and
