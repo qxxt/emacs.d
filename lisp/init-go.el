@@ -37,7 +37,11 @@
 ;; TODO
 (defun goimports ()
   "Imports dependencies using goimport tool."
-  (interactive))
+  (interactive)
+  (let (gofmt-command-bak gofmt-command)
+    (setq gofmt-command "goimports")
+    (gofmt)
+    (setq gofmt-command gofmt-command-bak)))
 
 (use-package go-mode
   :init
