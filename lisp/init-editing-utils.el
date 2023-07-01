@@ -38,6 +38,7 @@
               tab-width 4 ; 4 spaces indentation width.
               indent-tabs-mode nil ; Non tab indentation.
               make-backup-files nil ; Don't create a backup file.
+              column-number-mode t ; Display column number in modeline.
               scroll-preserve-screen-position 'always
               tooltip-delay 1.5)
 
@@ -58,10 +59,6 @@
   :bind (:map global-map
           ("C-x u" . undo-fu-only-undo)
           ("C-S-u" . undo-fu-only-redo)))
-
-(use-package yasnippet
-  :init
-  (yas-global-mode))
 
 (define-key global-map (kbd "C-c C-w") 'fill-paragraph) ; Wrap text
 
