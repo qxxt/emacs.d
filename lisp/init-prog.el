@@ -51,20 +51,9 @@
   :hook
   (sh-mode-hook . shfmt-on-save-mode))
 
-;; Nixos
-(use-package nix-mode
-  :mode "\\.nix\\'"
-  :hook
-  (nix-mode-hook . nix-prettify-mode)
-  (nix-mode-hook . nix-format-before-save)
-
-  :bind (:map nix-mode-map
-          ("C-c C-f" . nix-format-buffer)))
-
 (use-package dockerfile-mode
   :mode "\\Dockerfile\\'")
 
-;; Prog mode hook
 (add-hook 'prog-mode-hook
       #'(lambda()
           (show-paren-mode)
