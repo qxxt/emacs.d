@@ -1,0 +1,8 @@
+# -*- mode: snippet -*-
+# name: range
+# key: range
+# --
+for ${3:key}, ${2:value} := range ${1:target} {
+	println($3, $2)
+	$0
+}

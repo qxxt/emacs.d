@@ -1,0 +1,8 @@
+# -*- mode:snippet -*-
+# name: consts
+# key: consts
+# --
+const (
+	${1:name} ${2:int} = ${3:123}
+	$0
+)

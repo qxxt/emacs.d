@@ -1,0 +1,7 @@
+# -*- mode: snippet -*-
+# name: progn
+# key: progn
+# --
+func(${1:a, b, c}) {
+	$0
+}($1)

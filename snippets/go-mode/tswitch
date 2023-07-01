@@ -1,0 +1,11 @@
+# -*- mode: snippet -*-
+# name: tswitch
+# key: tswitch
+# --
+switch $2 := ${1:value}.(type) {
+	case ${3:string}:
+		println($2)
+		$0
+	default:
+		println("unknown type")
+}

@@ -1,0 +1,8 @@
+# -*- mode: snippet -*-
+# name: iferr
+# key: iferr
+# --
+if ${1:err} != nil {
+	panic($1)
+	$0
+}

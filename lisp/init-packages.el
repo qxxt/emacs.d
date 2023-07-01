@@ -14,7 +14,6 @@
 
         ;; Texts utils
         rainbow-mode rainbow-delimiters undo-fu iedit yasnippet
-        yasnippet-snippets
         ;; go-snippets py-snippets common-lisp-snippets
         ;; haskell-snippets
 

@@ -1,0 +1,6 @@
+# -*- mode: snippet -*-
+# name: daddr
+# key: daddr
+# --
+fmt.Printf("%p\n", $1)
+$0
