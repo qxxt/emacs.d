@@ -39,7 +39,7 @@
 
 (use-package go-mode
   :init
-  (setq gofmt-command "gofumpt")
+  (setq gofmt-command "gofumpt -extra")
 
   :bind (:map go-mode-map
           ("C-c C-f" . go-format-and-import)
