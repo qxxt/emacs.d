@@ -9,35 +9,38 @@
         ;; Interface
         modus-themes dimmer delight
 
-   ;; Package
-   use-package auto-package-update
+        ;; Package
+        use-package auto-package-update
 
-   ;; Texts utils
-   rainbow-mode rainbow-delimiters undo-fu iedit yasnippet
-   ;; yasnippet-snippets go-snippets py-snippets common-lisp-snippets
-   ;; haskell-snippets
+        ;; Texts utils
+        rainbow-mode rainbow-delimiters undo-fu iedit yasnippet
+        yasnippet-snippets
+        ;; go-snippets py-snippets common-lisp-snippets
+        ;; haskell-snippets
 
-   ;; Minibuffer
-   vertico marginalia
+        ;; Minibuffer
+        vertico marginalia
 
-   ;; Git
-   magit diff-hl
+        ;; Git
+        magit diff-hl
 
-   ;; Treemacs
-   treemacs treemacs-magit
+        ;; Treemacs
+        treemacs treemacs-magit
 
-   ;; Prog-mode
-   corfu eglot shfmt python-mode haskell-mode dockerfile-mode nix-mode
-   nixpkgs-fmt
+        ;; Prog-mode
+        corfu eglot shfmt python-mode haskell-mode dockerfile-mode
 
-   ;; Go-mode
-   go-mode
+        ;; Golang
+        go-mode
 
-   ;; *Lisp
-   slime
+        ;; Rust
+        rust-mode
 
-   ;; Org-mode
-   org-bullets ob-go))
+        ;; *Lisp
+        slime
+
+        ;; Org-mode
+        org-bullets ob-go ob-rust))
 
 ;; `time-to-number-of-days' depends upon `time-date'
 (require 'time-date)
