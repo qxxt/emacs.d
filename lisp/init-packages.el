@@ -13,7 +13,7 @@
         use-package auto-package-update
 
         ;; Texts utils
-        rainbow-mode rainbow-delimiters undo-fu iedit yasnippet
+        consult rainbow-mode rainbow-delimiters undo-fu iedit yasnippet
         ;; go-snippets py-snippets common-lisp-snippets
         ;; haskell-snippets
 
