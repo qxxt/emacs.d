@@ -9,12 +9,12 @@
   :init
   (setq modus-themes-italic-constructs t
         modus-themes-bold-constructs t
-        modus-themes-completions '((matches . (underline))
-                                   (selection . (semibold)))
+        ;; modus-themes-completions '((matches . (underline))
+        ;;                            (selection . (semibold)))
         modus-themes-org-blocks 'gray-background)
 
   (setq modus-themes-common-palette-overrides
-        '((underline-err nil)
+        '((underline-err "#ff0000")
           (underline-warning "#ffd700")
           (bg-added-fringe "#00ff00")
           (bg-changed-fringe "#ffff00")
