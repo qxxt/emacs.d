@@ -19,9 +19,17 @@
 ;; Enable global line wrap
 (global-visual-line-mode)
 
+(defun display-ln ()
+  "Add hook to display line number."
+  (add-hook 'prog-mode-hook 'display-line-numbers-mode)
+  (add-hook 'org-mode-hook 'display-line-numbers-mode)
+  (add-hook 'text-mode-hook 'display-line-numbers-mode))
+
 ;; Display line number if running GUI Emacs. Otherwise, display line number in modeline.
 (if (display-graphic-p)
-    (global-display-line-numbers-mode)
+    (progn
+      (display-ln)
+      (line-number-mode 0))
   (line-number-mode))
 
 (setq-default view-read-only t ; Overide `read-only-mode' (C-x C-q) with `view-only-mode'.
