@@ -40,7 +40,11 @@
         slime
 
         ;; Org-mode
-        org-bullets ob-go ob-rust))
+        org-bullets ob-go ob-rust
+
+        ;; Misc
+        which-key
+        ))
 
 ;; `time-to-number-of-days' depends upon `time-date'
 (require 'time-date)
