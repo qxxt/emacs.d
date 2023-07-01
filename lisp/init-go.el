@@ -38,14 +38,18 @@
 (defun goimports ()
   "Imports dependencies using goimport tool."
   (interactive)
-  (let (gofmt-command-bak gofmt-command)
+  (let ((gofmt-command-bak gofmt-command)
+        (gofmt-args-bak gofmt-args))
     (setq gofmt-command "goimports")
+    (setq gofmt-args nil)
     (gofmt)
-    (setq gofmt-command gofmt-command-bak)))
+    (setq gofmt-command gofmt-command-bak)
+    (setq gofmt-args gofmt-args-bak)))
 
 (use-package go-mode
   :init
-  (setq gofmt-command "gofumpt -extra")
+  (setq gofmt-command "gofumpt")
+  (setq gofmt-args '("-extra"))
 
   :bind (:map go-mode-map
           ("C-c C-f" . go-format-and-import)
