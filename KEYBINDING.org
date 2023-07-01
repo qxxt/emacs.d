@@ -25,7 +25,7 @@
 ** Prog-mode
    - Format buffer, most: C-c C-f
    - Jump to definition: C-c C-j
-   - comment-or-uncomment-region: C-c C-u
+   - comment-or-uncomment-region: M-;
    - Toggle hiding code block: C-c +
    - Eval buffer: C-c C-e
    - Rename symbol (iedit): C-;

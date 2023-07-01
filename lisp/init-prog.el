@@ -61,7 +61,6 @@
           (hs-minor-mode)
           (add-hook 'before-save-hook 'whitespace-cleanup)))
 
-(define-key prog-mode-map (kbd "C-c C-u") 'comment-or-uncomment-region) ;; toggle comment region
 (define-key prog-mode-map (kbd "C-c +") 'hs-toggle-hiding) ;; Toggle hiding code block
 
 (provide 'init-prog)
