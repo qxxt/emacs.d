@@ -19,9 +19,6 @@
    - Scroll page up: C-p
    - Scroll page down: C-n
 
-** Eglot/ LSP
-   - Rename symbol: C-c C-r
-
 ** Prog-mode
    - Format buffer, most: C-c C-f
    - Jump to definition: M-.

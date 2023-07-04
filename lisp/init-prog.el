@@ -39,7 +39,7 @@
   (define-key go-mode-map (kbd "M-.") nil)
 
   :bind (:map eglot-mode-map
-          ("C-c C-r" . eglot-rename))
+          ("C-;" . eglot-rename))
 
   :hook
   (nix-mode-hook . eglot-ensure)
@@ -55,12 +55,15 @@
 (use-package dockerfile-mode
   :mode "\\Dockerfile\\'")
 
+(use-package iedit
+  :demand t)
+
 (add-hook 'prog-mode-hook
-      #'(lambda()
-          (show-paren-mode)
-          (follow-mode)
-          (hs-minor-mode)
-          (add-hook 'before-save-hook 'whitespace-cleanup)))
+          #'(lambda()
+              (show-paren-mode)
+              (follow-mode)
+              (hs-minor-mode)
+              (add-hook 'before-save-hook 'whitespace-cleanup)))
 
 (define-key prog-mode-map (kbd "C-c +") 'hs-toggle-hiding) ;; Toggle hiding code block
 
