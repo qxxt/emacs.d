@@ -60,5 +60,13 @@
   (go-mode-hook . (lambda()
                 (add-hook 'before-save-hook 'go-format-and-import nil 'local))))
 
+;; I’m using gofumpt with ’("--extra") arguments.
+;; When projects set gofmt-command to "gofmt"
+;; it will throw unknown parameter error.
+(advice-add 'gofmt
+            :before '(lambda ()
+                       (if (equal gofmt-command "gofmt")
+                           (setq gofmt-args nil))))
+
 (provide 'init-go)
 ;;; init-go.el ends here
