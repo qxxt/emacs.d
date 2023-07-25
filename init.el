@@ -36,7 +36,7 @@
 (eval-when-compile
   (require 'use-package)
   (setq use-package-verbose t
-	use-package-always-ensure nil
+	use-package-always-ensure t
 	use-package-always-defer t
 	use-package-hook-name-suffix nil))
 
