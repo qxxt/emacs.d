@@ -16,5 +16,9 @@
   (interactive)
   (load user-init-file))
 
+(use-package which-key
+  :config
+  (which-key-mode))
+
 (provide 'init-debugger)
 ;;; init-debugger.el ends here

@@ -3,16 +3,15 @@
 ;;; Commentary:
 ;;; Code:
 
-;; Produce backtraces when errors occur: can be helpful to diagnose startup issues
+;; Produce backtraces when errors occur
 (setq debug-on-error t)
 
 ;; Load ~/.emacs.d/lisp directory
 (add-to-list 'load-path (expand-file-name "init-lisp" user-emacs-directory))
+(add-to-list 'load-path (expand-file-name "tool-lisp" user-emacs-directory))
 
-;; Change saved customization settings file. This prevents clutter in
-;; init.el.
+;; Change saved customization settings file to prevent cluttering init.el.
 (setq custom-file (expand-file-name "custom.el" user-emacs-directory))
-;; Load customization file, if exist.
 (if (file-exists-p custom-file)
     (load custom-file))
 
@@ -20,7 +19,9 @@
 (require 'package)
 
 ;; Add Melpa to package sources list
-(add-to-list 'package-archives '("melpa" . "https://melpa.org/packages/"))
+;; When added to the beginning of the list, it will automatically be
+;; prioritized over other package sources.
+(push '("melpa" . "https://melpa.org/packages/") package-archives)
 
 ;; Initialize package as `package-enable-at-startup' is set to nil in
 ;; early-init.el
@@ -34,19 +35,18 @@
 
 (eval-when-compile
   (require 'use-package)
-  (setq use-package-verbose t))
-
-(setq use-package-always-ensure nil ; Ensure all use-package packages
-      use-package-always-defer t ; Defer loading packages unless explicitly demanded.
-      use-package-hook-name-suffix nil ; Disable suffix "-hook" for use-package's :hook
-      )
+  (setq use-package-verbose t
+	use-package-always-ensure nil
+	use-package-always-defer t
+	use-package-hook-name-suffix nil))
 
 (require 'init-packages)
-
 (require 'init-interface)
 (require 'init-theme)
 (require 'init-buffer)
 (require 'init-modeline)
+(require 'init-debugger)
+(require 'init-tramp)
 
 (require 'init-editing-utils)
 (require 'init-snippet)
@@ -62,11 +62,7 @@
 
 (require 'init-face)
 
-;; Reevaluate init file
-(defun reevaluate-init-file ()
-  "Reevaluate init.el file for debugging."
-  (interactive)
-  (load user-init-file))
-
 (provide 'init)
 ;;; init.el ends here
+(put 'narrow-to-region 'disabled nil)
+(put 'list-threads 'disabled nil)
