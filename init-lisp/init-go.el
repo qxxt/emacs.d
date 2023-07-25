@@ -5,6 +5,13 @@
 
 (put 'gofmt-command 'safe-local-variable #'stringp)
 
+(defun goimports ()
+  "Imports dependencies using goimport tool."
+  (interactive)
+  (let ((gofmt-command "goimports")
+        (gofmt-args nil))
+    (gofmt)))
+
 (defun go-format-and-import ()
   "Format and imports the required modules."
   (interactive)
@@ -13,29 +20,22 @@
   (gofmt)
 
   ;; https://github.com/golang/go/issues/60230
-  (unless (and (bound-and-true-p eglot--managed-mode)
-               (eglot-code-actions nil nil "source.organizeImports" t))
-    (goimports)))
+  (if (bound-and-true-p eglot--managed-mode)
+      (condition-case nil
+          (eglot-code-actions nil nil "source.organizeImports" t)
+        ('error
+         (goimports)))
 
-(defun goimports ()
-  "Imports dependencies using goimport tool."
-  (interactive)
-  (let ((gofmt-command-bak gofmt-command)
-        (gofmt-args-bak gofmt-args))
-    (setq gofmt-command "goimports")
-    (setq gofmt-args nil)
-    (gofmt)
-    (setq gofmt-command gofmt-command-bak)
-    (setq gofmt-args gofmt-args-bak)))
+    (goimports)))
 
 (use-package go-mode
   :init
   (setq gofmt-command "gofumpt")
-  (setq gofmt-args '("-extra"))
+  (setq gofmt-args (list "-extra"))
 
   :bind (:map go-mode-map
           ("C-c C-f" . go-format-and-import)
-          ("C-c C-e" . go-eval-buffer)
+          ("C-c C-e" . mock-buffer)
           ("M-." . godef-jump))
 
   :hook

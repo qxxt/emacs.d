@@ -18,8 +18,8 @@
 (unless (display-graphic-p)
   (xterm-mouse-mode))
 
-(setq-default window-resize-pixelwise t
-              frame-resize-pixelwise t) ;; Fix Fullscreen GUI on KDE.
+(setq window-resize-pixelwise t
+      frame-resize-pixelwise t) ;; Fix Fullscreen GUI on KDE.
 
 (provide 'init-interface)
 ;;; init-interface.el ends here

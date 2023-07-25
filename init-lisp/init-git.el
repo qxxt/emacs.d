@@ -14,11 +14,5 @@
   (global-diff-hl-mode)
   (diff-hl-margin-mode))
 
-;; (use-package magit-delta
-;;   :ensure t
-;;   :demand t
-;;   :init
-;;   (magit-delta-mode 1))
-
 (provide 'init-git)
 ;;; init-git.el ends here

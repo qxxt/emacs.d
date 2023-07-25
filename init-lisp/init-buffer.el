@@ -6,10 +6,11 @@
 (defcustom buffer-skip-regexp
   (rx bos (or (or "*Backtrace*" "*Compile-Log*" "*Completions*"
                   "*Messages*" "*package*" "*Warnings*"
-                  "*Async-native-compile-log*" "*scratch*"
-                  "*Flymake log*" "*GNU Emacs*" "*Help*")
-              (seq "*EGLOT" (zero-or-more anything))
-              (seq "magit" (zero-or-more anything)))
+                  "*Async-native-compile-log*"
+                  "*GNU Emacs*" "*Help*")
+              (seq "*EGLOT" (one-or-more anything))
+              (seq "magit" (one-or-more anything))
+              (seq "*Flymake" (one-or-more anything)))
       eos)
   "Regular expression matching buffers ignored by `next-buffer' and
 `previous-buffer'."

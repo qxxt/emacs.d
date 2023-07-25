@@ -32,15 +32,17 @@
       (line-number-mode 0))
   (line-number-mode))
 
-(setq-default view-read-only t ; Overide `read-only-mode' (C-x C-q) with `view-only-mode'.
-              blink-cursor-interval 0.4 ; Length of cursor blink in seconds.
-              case-fold-search t ; Searches ignore case.
-              tab-width 4 ; 4 spaces indentation width.
-              indent-tabs-mode nil ; Non tab indentation.
-              make-backup-files nil ; Don't create a backup file.
-              column-number-mode t ; Display column number in modeline.
-              scroll-preserve-screen-position 'always
-              tooltip-delay 1.5)
+(setq tab-width 2
+      comment-empty-lines t       ; Make comment region comments empty lines.
+      view-read-only t            ; Overide `read-only-mode' (C-x C-q) with `view-only-mode'.
+      blink-cursor-interval 0.4   ; Length of cursor blink in seconds.
+      case-fold-search t          ; Searches ignore case.
+      tab-width 4                 ; 4 spaces indentation width.
+      indent-tabs-mode nil        ; Non tab indentation.
+      make-backup-files nil       ; Don't create a backup file.
+      column-number-mode t        ; Display column number in modeline.
+      scroll-preserve-screen-position 'always
+      tooltip-delay 1.5)
 
 (add-hook 'after-init-hook 'transient-mark-mode) ; Adds color to marked region.
 
@@ -49,7 +51,6 @@
   (prog-mode-hook . rainbow-delimiters-mode))
 
 (use-package rainbow-mode
-  :delight
   :hook
   (prog-mode-hook . rainbow-mode))
 

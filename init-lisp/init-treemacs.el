@@ -19,11 +19,7 @@
 
   :bind (:map global-map
               ("C-c f" . treemacs-select-window)
-              ([f8] . treemacs))
-
-  ;; :hook
-  ;; ((vc-dir-mode-hook prog-mode-hook) . treemacs-display-current-project-exclusively)
-  )
+              ([f8] . treemacs)))
 
 (use-package treemacs-magit
   :after (treemacs magit)

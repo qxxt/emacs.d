@@ -51,7 +51,6 @@
 (use-package yasnippet
   :ensure t
   :demand t
-  :delight
   :config
   ;; Adds personal snippets to snippet list.
   ;; (add-to-list 'yas-snippet-dirs (expand-file-name "snippets" user-emacs-directory))

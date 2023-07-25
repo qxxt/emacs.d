@@ -11,7 +11,7 @@
   (corfu-preview-current t)      ;; Disable current candidate preview
   (corfu-on-exact-match nil)     ;; Configure handling of exact matches
   (corfu-scroll-margin 5)        ;; Use scroll margin
-  (corfu-popupinfo-delay 0.5)
+  (corfu-popupinfo-delay 0.5)    ;; Popup delay
 
   :hook
   ((prog-mode-hook . corfu-mode)
@@ -24,25 +24,18 @@
 
 (use-package eglot
   :init
-  (setq-default eglot-workspace-configuration
+  (setq eglot-workspace-configuration
         ;; gopls configurations
         ;; https://github.com/golang/tools/blob/master/gopls/doc/settings.md
         '((:gopls .
-              ((formating.gofumpt . t)
-               (ui.completion.usePlaceholders . t)
-               (ui.diagnostic.staticcheck . t)))
-          (:nil .
-            ((formatting.command . "nixpkgs-fmt")))))
-
-  :config
-  (add-to-list 'eglot-server-programs '(nix-mode . ("nil")))
-  (define-key go-mode-map (kbd "M-.") nil)
+                  ((formating.gofumpt . t)
+                   (ui.completion.usePlaceholders . t)
+                   (ui.diagnostic.staticcheck . t)))))
 
   :bind (:map eglot-mode-map
-          ("C-;" . eglot-rename))
+              ("C-;" . eglot-rename))
 
   :hook
-  (nix-mode-hook . eglot-ensure)
   (eglot-managed-mode-hook . flymake-mode))
 
 (use-package shfmt
@@ -61,7 +54,6 @@
 (add-hook 'prog-mode-hook
           #'(lambda()
               (show-paren-mode)
-              (follow-mode)
               (hs-minor-mode)
               (add-hook 'before-save-hook 'whitespace-cleanup)))
 
