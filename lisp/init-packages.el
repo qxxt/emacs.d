@@ -79,8 +79,9 @@
 	(apu--hide-preview)
 	update-then?)))
 
-  (if (and (not (> auto-package-update-interval (- (apu--today-day) (apu--read-last-update-day))))
-	     (apu-package-refresh-contents?)
+  (if (and (or (not (file-exists-p auto-package-update-last-update-day-path))
+	       (not (> auto-package-update-interval (- (apu--today-day) (apu--read-last-update-day)))))
+	   (apu-package-refresh-contents?)
 	     (apu-update-list?))
       (auto-package-update-now)))
 
