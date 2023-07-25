@@ -12,7 +12,7 @@
 	modus-themes dimmer delight
 
 	;; Package
-	use-package auto-package-update
+	use-package
 
 	;; Texts utils
 	consult rainbow-mode rainbow-delimiters undo-fu iedit
