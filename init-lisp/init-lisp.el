@@ -3,7 +3,8 @@
 ;;; Commentary:
 ;;; Code:
 
-(setq inferior-lisp-program "sbcl")
+(setq initial-major-mode 'emacs-lisp-mode)
+(setq initial-scratch-message (concat (string-trim initial-scratch-message) "\n(reset-messages-buffer)\n\n"))
 
 (define-advice elisp-get-fnsym-args-string (:around (func sym &rest r) docstring)
   "If SYM is a function, append its docstring."
@@ -15,6 +16,20 @@
 	  (stringp oneline)
 	  (not (string= "" oneline))
 	  (concat "\n" oneline)))))
+
+(use-package sly
+  :ensure t
+  :init
+  (setq inferior-lisp-program "sbcl")
+  :bind
+  (:map sly-mode-map
+	("C-c C-e" . sly-eval-buffer)))
+
+(use-package lispy
+  :ensure t
+  :hook
+  ((emacs-lisp-mode-hook . lispy-mode)
+   (lisp-interaction-mode-hook . lispy-mode)))
 
 (add-hook 'emacs-lisp-mode-hook 'flymake-mode)
 (define-key emacs-lisp-mode-map (kbd "C-c C-e") 'eval-buffer)
