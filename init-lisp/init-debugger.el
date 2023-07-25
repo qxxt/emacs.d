@@ -3,12 +3,13 @@
 ;;; Commentary:
 ;;; Code:
 
-(defun reset-messages-buffer()
+(defun reset-messages-buffer ()
   "Reset the *Messages* buffer."
   (interactive)
-  (with-current-buffer "*Messages*"
-    (let ((buffer-read-only nil))
-      (erase-buffer))))
+  (if-let ((msg-buf (get-buffer "*Messages*")))
+      (with-current-buffer msg-buf
+	(let ((buffer-read-only nil))
+	  (erase-buffer)))))
 
 ;; Reevaluate init file
 (defun reevaluate-init-file ()
