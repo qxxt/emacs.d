@@ -31,6 +31,11 @@
   ((emacs-lisp-mode-hook . lispy-mode)
    (lisp-interaction-mode-hook . lispy-mode)))
 
+(use-package macrostep
+  :bind
+  (:map emacs-lisp-mode-map
+	("C-c C-=" . macrostep-mode)))
+
 (add-hook 'emacs-lisp-mode-hook 'flymake-mode)
 (define-key emacs-lisp-mode-map (kbd "C-c C-e") 'eval-buffer)
 

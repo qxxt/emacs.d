@@ -38,7 +38,7 @@
 	rust-mode
 
 	;; *Lisp
-	sly lispy
+	lispy sly macrostep
 
 	;; Org-mode
 	org-bullets ob-go ob-rust
