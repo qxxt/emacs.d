@@ -11,13 +11,20 @@
 	(let ((buffer-read-only nil))
 	  (erase-buffer)))))
 
-;; Reevaluate init file
+(defun split-messages-window ()
+  "Add small windows on the right for *Messages* buffer."
+  (interactive)
+  (let ((w (split-window-horizontally 90)))
+      (select-window w)
+      (switch-to-buffer "*Messages*")))
+
 (defun reevaluate-init-file ()
   "Reevaluate init.el file for debugging."
   (interactive)
   (load user-init-file))
 
 (use-package which-key
+  :demand t
   :config
   (which-key-mode))
 
