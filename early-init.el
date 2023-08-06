@@ -10,7 +10,8 @@
 
 (setq package-enable-at-startup nil)
 
-;; So we can detect this having been loaded
-(provide 'early-init)
+;; Open GUI Emacs in fullscreen
+(add-to-list 'default-frame-alist '(fullscreen . maximized))
 
+(provide 'early-init)
 ;;; early-init.el ends here
