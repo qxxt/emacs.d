@@ -37,6 +37,8 @@
 	use-package-always-defer t
 	use-package-hook-name-suffix nil))
 
+(require 'init-utils)
+
 (require 'init-packages)
 (require 'init-interface)
 (require 'init-theme)
