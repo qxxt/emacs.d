@@ -19,14 +19,11 @@
 (require 'package)
 
 ;; Add Melpa to package sources list
-;; When added to the beginning of the list, it will automatically be
-;; prioritized over other package sources.
+;; Using `push’ adds melpa to the beginning of the list,
+;; prioritizing it over other package sources.
 (push '("melpa" . "https://melpa.org/packages/") package-archives)
 
-;; Initialize package as `package-enable-at-startup' is set to nil in
-;; early-init.el
 (package-initialize)
-
 (unless package-archive-contents
   (package-refresh-contents))
 
@@ -57,8 +54,9 @@
 
 (require 'init-prog)
 (require 'init-go)
-(require 'init-lisp) ; TODO
-(require 'init-org) ; TODO
+(require 'init-lisp)                    ; TODO
+(require 'init-org)                     ; TODO
+(require 'init-python)                  ; TODO
 
 (require 'init-face)
 
