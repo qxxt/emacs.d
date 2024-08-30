@@ -1,0 +1,8 @@
+# -*- mode: snippet -*-
+# name: logger
+# key: logger
+# --
+var (
+    logger    *log.Logger = log.New(os.Stdout, "[Log] ", log.Ltime|log.Lshortfile)
+    errLogger *log.Logger = log.New(os.Stderr, "[Err] ", log.Ltime|log.Lshortfile)
+)

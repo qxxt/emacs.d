@@ -3,6 +3,14 @@
 ;;; Commentary:
 ;;; Code:
 
+(define-minor-mode my--lisp-edit-mode
+  "SADSAD."
+  :init-value nil
+  (run-mode-hooks))
+
+(add-hook 'lisp-interaction-mode-hook 'my--lisp-edit-mode)
+(add-hook 'emacs-lisp-mode-hook 'my--lisp-edit-mode)
+
 (setq initial-major-mode 'emacs-lisp-mode)
 (setq initial-scratch-message (concat (string-trim initial-scratch-message) "\n(reset-messages-buffer)\n\n"))
 
@@ -29,8 +37,7 @@
 (use-package lispy
   :ensure t
   :hook
-  ((emacs-lisp-mode-hook . lispy-mode)
-   (lisp-interaction-mode-hook . lispy-mode)))
+  ((my--lisp-edit-mode-hook . lispy-mode)))
 
 (use-package macrostep
   :bind
@@ -38,7 +45,7 @@
    emacs-lisp-mode-map
    ("C-c C-=" . macrostep-mode)))
 
-(add-hook 'emacs-lisp-mode-hook 'flymake-mode)
+(add-hook 'my--lisp-edit-mode-hook 'flymake-mode)
 (define-key emacs-lisp-mode-map (kbd "C-c C-e") 'eval-buffer)
 
 (provide 'init-lisp)

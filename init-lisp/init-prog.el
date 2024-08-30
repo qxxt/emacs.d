@@ -51,6 +51,10 @@
 (use-package iedit
   :demand t)
 
+(use-package flymake-popon
+  :hook
+  (flymake-mode-hook . flymake-popon-mode))
+
 (add-hook 'prog-mode-hook
           #'(lambda()
               (show-paren-mode)
@@ -58,6 +62,8 @@
               (add-hook 'before-save-hook 'whitespace-cleanup)))
 
 (define-key prog-mode-map (kbd "C-c +") 'hs-toggle-hiding) ;; Toggle hiding code block
+
+(define-key prog-mode-map (kbd "M-.") 'xref-find-definitions) ;; Toggle hiding code block
 
 (provide 'init-prog)
 ;;; init-prog.el ends here

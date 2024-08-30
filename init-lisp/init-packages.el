@@ -3,51 +3,10 @@
 ;;; Commentary:
 ;;; Code:
 
-(require 'packages-update)
+(require 'packages-upgrade-interactive)
 
-;; Selected packages
-(setq package-selected-packages
-      '(
-	;; Interface
-	modus-themes dimmer delight
-
-	;; Package
-	use-package
-
-	;; Texts utils
-	consult rainbow-mode rainbow-delimiters undo-fu iedit
-	yasnippet
-
-	;; Minibuffer
-	vertico marginalia
-
-	;; Git
-	magit
-
-	;; Treemacs
-	treemacs treemacs-magit
-
-	;; Prog-mode
-	corfu eglot shfmt python-mode haskell-mode
-	dockerfile-mode diff-hl
-
-	;; Golang
-	go-mode
-
-	;; Rust
-	rust-mode
-
-	;; *Lisp
-	lispy sly macrostep
-
-	;; Org-mode
-	org-bullets ob-go ob-rust
-
-	;; Help
-	which-key))
-
-(setq package-update-interval 1)
-(package-upgrades?)
+(setq package-refresh-interval 2)
+(pui--scheduler "07:00pm")
 
 (provide 'init-packages)
 ;;; init-packages.el ends here

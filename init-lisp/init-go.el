@@ -34,13 +34,12 @@
   (setq gofmt-args (list "-extra"))
 
   :bind (:map go-mode-map
-          ("C-c C-f" . go-format-and-import)
-          ("C-c C-e" . mock-buffer)
-          ("M-." . godef-jump))
+              ("C-c C-f" . go-format-and-import)
+              ("C-c C-e" . mock-buffer))
 
   :hook
   (go-mode-hook . (lambda()
-                (add-hook 'before-save-hook 'go-format-and-import nil 'local))))
+                    (add-hook 'before-save-hook 'go-format-and-import nil 'local))))
 
 ;; I’m using gofumpt with ’("--extra") arguments.
 ;; When projects set gofmt-command to "gofmt"

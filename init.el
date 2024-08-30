@@ -33,9 +33,10 @@
 (eval-when-compile
   (require 'use-package)
   (setq use-package-verbose t
-	use-package-always-ensure t
-	use-package-always-defer t
-	use-package-hook-name-suffix nil))
+        use-package-always-ensure t
+        use-package-always-defer (not (daemonp)) ; Defer if not run on daemon.
+        use-package-hook-name-suffix nil
+        use-package-compute-statistics t))
 
 (require 'init-utils)
 
@@ -47,6 +48,7 @@
 (require 'init-debugger)
 (require 'init-tramp)
 
+(require 'init-tree-sitter)
 (require 'init-editing-utils)
 (require 'init-snippet)
 (require 'init-minibuffer)
@@ -61,6 +63,10 @@
 (require 'init-python)                  ; TODO
 
 (require 'init-face)
+
+;; (use-package-report)
+(setq package-selected-packages (append package-selected-packages
+                                        (hash-table-keys use-package-statistics)))
 
 (provide 'init)
 ;;; init.el ends here
