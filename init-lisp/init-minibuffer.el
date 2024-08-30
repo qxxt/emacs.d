@@ -10,18 +10,20 @@
   :ensure t
   :demand t
   :init
-  (vertico-mode)
   (setq vertico-count 10
         vertico-resize t)
 
+  :config
+  (vertico-mode)
+
   :bind (:map vertico-map
-          ("C-n" . vertico-scroll-up)
-          ("C-p" . vertico-scroll-down)))
+              ("C-n" . vertico-scroll-up)
+              ("C-p" . vertico-scroll-down)))
 
 (use-package marginalia
   :ensure t
   :demand t
-  :init
+  :config
   (marginalia-mode))
 
 (provide 'init-minibuffer)

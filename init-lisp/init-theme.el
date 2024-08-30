@@ -9,11 +9,8 @@
   :init
   (setq modus-themes-italic-constructs t
         modus-themes-bold-constructs t
-        ;; modus-themes-completions '((matches . (underline))
-        ;;                            (selection . (semibold)))
-        modus-themes-org-blocks 'gray-background)
-
-  (setq modus-themes-common-palette-overrides
+        modus-themes-org-blocks 'gray-background
+        modus-themes-common-palette-overrides
         '((underline-err "#ff0000")
           (underline-warning "#ffd700")
           (bg-added-fringe "#00ff00")
@@ -21,7 +18,7 @@
           (bg-removed-fringe "#ff0000")))
 
   :config
-  (load-theme 'modus-operandi))
+  (load-theme 'modus-operandi t))
 
 (use-package dimmer
   :demand t

@@ -11,19 +11,20 @@
   (concat
    (apply func sym r)
    (let* ((doc (and (fboundp sym) (documentation sym 'raw)))
-	  (oneline (and doc (substring doc 0 (string-match "\n" doc)))))
+          (oneline (and doc (substring doc 0 (string-match "\n" doc)))))
      (and oneline
-	  (stringp oneline)
-	  (not (string= "" oneline))
-	  (concat "\n" oneline)))))
+          (stringp oneline)
+          (not (string= "" oneline))
+          (concat "\n" oneline)))))
 
 (use-package sly
   :ensure t
   :init
   (setq inferior-lisp-program "sbcl")
   :bind
-  (:map sly-mode-map
-	("C-c C-e" . sly-eval-buffer)))
+  (:map
+   sly-mode-map
+   ("C-c C-e" . sly-eval-buffer)))
 
 (use-package lispy
   :ensure t
@@ -33,8 +34,9 @@
 
 (use-package macrostep
   :bind
-  (:map emacs-lisp-mode-map
-	("C-c C-=" . macrostep-mode)))
+  (:map
+   emacs-lisp-mode-map
+   ("C-c C-=" . macrostep-mode)))
 
 (add-hook 'emacs-lisp-mode-hook 'flymake-mode)
 (define-key emacs-lisp-mode-map (kbd "C-c C-e") 'eval-buffer)

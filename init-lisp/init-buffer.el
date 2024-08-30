@@ -12,8 +12,7 @@
               (seq "magit" (one-or-more anything))
               (seq "*Flymake" (one-or-more anything)))
       eos)
-  "Regular expression matching buffers ignored by `next-buffer' and
-`previous-buffer'."
+  "Regular expression matching buffers ignored by `next-buffer' and `previous-buffer'."
   :type 'regexp)
 
 (defun buffer-skip-p (window buffer bury-or-kill)

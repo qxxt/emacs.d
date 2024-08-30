@@ -10,7 +10,7 @@
 (use-package diff-hl
   :ensure t
   :demand t
-  :init
+  :config
   (global-diff-hl-mode)
   (diff-hl-margin-mode))
 

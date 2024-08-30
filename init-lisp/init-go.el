@@ -3,7 +3,7 @@
 ;;; Commentary:
 ;;; Code:
 
-(put 'gofmt-command 'safe-local-variable #'stringp)
+(put 'gofmt-command 'safe-local-variable 'stringp)
 
 (defun goimports ()
   "Imports dependencies using goimport tool."
@@ -46,9 +46,9 @@
 ;; When projects set gofmt-command to "gofmt"
 ;; it will throw unknown parameter error.
 (advice-add 'gofmt
-            :before '(lambda ()
-                       (if (equal gofmt-command "gofmt")
-                           (setq gofmt-args nil))))
+            :before (lambda ()
+                      (if (equal gofmt-command "gofmt")
+                          (setq gofmt-args nil))))
 
 (provide 'init-go)
 ;;; init-go.el ends here

@@ -14,7 +14,6 @@
 
   (treemacs-follow-mode t)
   (treemacs-filewatch-mode t)
-
   (treemacs-hide-gitignored-files-mode nil)
 
   :bind (:map global-map
