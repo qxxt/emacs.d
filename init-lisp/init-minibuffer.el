@@ -3,28 +3,16 @@
 ;;; Commentary:
 ;;; Code:
 
-;; Save minibuffer histories
 (savehist-mode)
 
-(use-package vertico
-  :ensure t
-  :demand t
-  :init
-  (setq vertico-count 10
-        vertico-resize t)
-
+(use-package helm
   :config
-  (vertico-mode)
+  (helm-mode)
+  :bind (:map global-map
+              ("M-x" . helm-M-x)
+              ("C-x C-f" . helm-find-files)
+              ("C-x r b" . helm-filtered-bookmarks)))
 
-  :bind (:map vertico-map
-              ("C-n" . vertico-scroll-up)
-              ("C-p" . vertico-scroll-down)))
-
-(use-package marginalia
-  :ensure t
-  :demand t
-  :config
-  (marginalia-mode))
 
 (provide 'init-minibuffer)
 ;;; init-minibuffer.el ends here
