@@ -3,22 +3,26 @@
 ;;; Commentary:
 ;;; Code:
 
-(use-package modus-themes
-  :ensure t
-  :demand t
-  :init
-  (setq modus-themes-italic-constructs t
-        modus-themes-bold-constructs t
-        modus-themes-org-blocks 'gray-background
-        modus-themes-common-palette-overrides
-        '((underline-err "#ff0000")
-          (underline-warning "#ffd700")
-          (bg-added-fringe "#00ff00")
-          (bg-changed-fringe "#ffff00")
-          (bg-removed-fringe "#ff0000")))
-
+(use-package doom-themes
+  :custom
+  ;; Global settings (defaults)
+  (doom-themes-enable-bold t)   ; if nil, bold is universally disabled
+  (doom-themes-enable-italic t) ; if nil, italics is universally disabled
+  ;; for treemacs users
+  (doom-themes-treemacs-theme "doom-atom") ; use "doom-colors" for less minimal icon theme
   :config
-  (load-theme 'modus-operandi t))
+  ;; (load-theme 'doom-solarized-dark-high-contrast t)
+  (load-theme 'doom-one t)
+
+  ;; Enable flashing mode-line on errors
+  (doom-themes-visual-bell-config)
+
+  ;; Enable custom neotree theme (nerd-icons must be installed!)
+  ;; (doom-themes-neotree-config)
+  ;; or for treemacs users
+  (doom-themes-treemacs-config)
+  ;; Corrects (and improves) org-mode's native fontification.
+  (doom-themes-org-config))
 
 (use-package dimmer
   :demand t
