@@ -67,5 +67,11 @@
 
 (define-key global-map (kbd "C-c C-w") 'fill-paragraph) ; Wrap text
 
+(use-package pcre2el
+  :config
+  (pcre-mode)
+  :bind (:map global-map
+              ("C-c r" . query-replace-regexp)))
+
 (provide 'init-editing-utils)
 ;;; init-editing-utils.el ends here
