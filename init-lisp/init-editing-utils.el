@@ -13,6 +13,12 @@
 (add-hook 'after-init-hook 'electric-indent-mode)
 (add-hook 'after-init-hook 'electric-quote-mode)
 
+;; Enable copy-paste on tui
+(use-package xclip
+  :unless window-system
+  :config
+  (xclip-mode))
+
 ;; Highlight current line
 (global-hl-line-mode)
 
