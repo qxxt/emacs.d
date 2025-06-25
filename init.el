@@ -34,7 +34,7 @@
   (require 'use-package)
   (setq use-package-verbose t
         use-package-always-ensure t
-        use-package-always-defer (not (daemonp)) ; Defer if not run on daemon.
+        ;; use-package-always-defer (not (daemonp)) ; Defer if not run on daemon.
         use-package-hook-name-suffix nil
         use-package-compute-statistics t))
 
