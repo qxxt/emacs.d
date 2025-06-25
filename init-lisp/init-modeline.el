@@ -1,18 +1,17 @@
-;;; init-modeline.el --- modeline.
+;;; init-modeline.el --- modeline.  -*- lexical-binding: t; -*-
 ;; -*- lexical-binding: t -*-
 ;;; Commentary:
 ;;; Code:
 
-(use-package diminish
-  :ensure t
-  :demand t
+(use-package delight
   :config
-  (diminish 'hs-minor-mode)
-  (diminish 'yas-minor-mode)
-  (diminish 'rainbow-mode)
-  (diminish 'eldoc-mode)
-  (diminish 'visual-line-mode)
-  (diminish 'auto-revert-mode))
+  (delight 'rainbow-mode)
+  (delight 'hs-minor-mode nil 'hideshow)
+  (delight 'yas-minor-mode nil 'yasnippet)
+  (delight 'counsel-mode nil 'counsel)
+  (delight 'ivy-mode nil 'ivy)
+  (delight 'which-key-mode nil 'which-key)
+  (delight 'eldoc-mode nil 'eldoc))
 
 (provide 'init-modeline)
 ;;; init-modeline.el ends here
