@@ -3,20 +3,7 @@
 ;;; Commentary:
 ;;; Code:
 
-(use-package corfu
-  :custom
-  (corfu-auto t)                 ;; Enable auto completion
-  (corfu-separator ?\s)          ;; Orderless field separator
-  (corfu-quit-at-boundary nil)   ;; Never quit at completion boundary
-  (corfu-preview-current t)      ;; Disable current candidate preview
-  (corfu-on-exact-match nil)     ;; Configure handling of exact matches
-  (corfu-scroll-margin 5)        ;; Use scroll margin
-  (corfu-popupinfo-delay 0.5)    ;; Popup delay
 
-  :hook
-  ((prog-mode-hook . corfu-mode)
-   (org-mode-hook . corfu-mode)
-   (corfu-mode-hook . corfu-popupinfo-mode)))
 (use-package company
   :init
   (setq completion-ignore-case t)
