@@ -17,10 +17,16 @@
   ((prog-mode-hook . corfu-mode)
    (org-mode-hook . corfu-mode)
    (corfu-mode-hook . corfu-popupinfo-mode)))
+(use-package company
+  :init
+  (setq completion-ignore-case t)
 
-(setq completion-cycle-threshold 3 ; TAB cycle if there are only few candidates
-      tab-always-indent 'complete ; Enable indentation+completion using the TAB key.
-      )
+  :config
+  (global-company-mode))
+
+;; (setq completion-cycle-threshold 3 ; TAB cycle if there are only few candidates
+;;       tab-always-indent 'complete ; Enable indentation+completion using the TAB key.
+;;       )
 
 (use-package eglot
   :init
