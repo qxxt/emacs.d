@@ -13,6 +13,9 @@
               ("C-x C-f" . helm-find-files)
               ("C-x r b" . helm-filtered-bookmarks)))
 
+(use-package swiper
+  :bind (:map global-map
+              ("C-s" . swiper-isearch)))
 
 (provide 'init-minibuffer)
 ;;; init-minibuffer.el ends here
