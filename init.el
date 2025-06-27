@@ -3,6 +3,11 @@
 ;;; Commentary:
 ;;; Code:
 
+;;
+(defvar is-termux-session nil)
+(if (getenv "TERMUX_VERSION")
+    (setq is-termux-session t))
+
 ;; Produce backtraces when errors occur
 (setq debug-on-error t)
 

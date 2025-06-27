@@ -17,7 +17,13 @@
 (use-package xclip
   :unless window-system
   :config
-  (xclip-mode))
+  (if (or (not (eq xclip-method 'emacs))
+          (executable-find "xclip")
+          (executable-find "termux-clipboard-get"))
+      (xclip-mode)
+    (if is-termux-session
+        (error "error: ‘termux-clipboard-get’ could not be found")
+      (error "error: ‘xclip’ could not be found"))))
 
 ;; Highlight current line
 (global-hl-line-mode)
